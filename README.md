@@ -44,7 +44,7 @@ Yêu cầu:
 #### Sử dụng Visual Studio Code:
 
 1. Cài đặt VS Code và tiện ích C++ (C/C++ Extension by Microsoft).
-2. Mở file `main.cpp` trong VS Code.
+2. Mở file `Ex1.cpp` trong VS Code.
 3. Nhấn `Ctrl + Shift + B` để build chương trình.
 4. Nhấn `F5` để chạy chương trình.
 
