@@ -1,8 +1,30 @@
 <div class="bg-white p-7 rounded-lg shadow-md text-center">
     <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Danh sách sinh viên</h1>
+
+    <!-- Nút Import & Export -->
+    <div class="flex justify-between items-center mb-4">
+        <!-- Nút Nhập CSV/Excel -->
+        <div>
+            <input type="file" id="import-file" accept=".csv,.xlsx" class="hidden" />
+            <label for="import-file" class="bg-[#D3C0F9] text-black px-4 py-2 rounded-lg cursor-pointer">
+                Nhập CSV/Excel
+            </label>
+        </div>
+        <!-- Nút Xuất CSV/Excel -->
+        <div class="flex gap-4">
+            <button id="export-csv-btn" class="bg-[#B5DDD1] text-black px-4 py-2 rounded-lg">
+                Xuất CSV
+            </button>
+
+            <button id="export-excel-btn" class="bg-[#D7E7A9] text-black px-4 py-2 rounded-lg">
+                Xuất Excel
+            </button>
+        </div>
+    </div>
+
     <div class="overflow-x-auto">
         <table class="table-auto w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden text-center">
-            <thead class="bg-gray-300 text-black">
+            <thead class="bg-gray-200 text-black">
                 <tr>
                     <th class="px-3 py-2 text-[15px] font-medium">MSSV</th>
                     <th class="px-3 py-2 text-[15px] font-medium">Họ và tên</th>
@@ -18,19 +40,143 @@
                     <th class="px-3 py-2 text-[15px] font-medium">Hành động</th>
                 </tr>
             </thead>
-            <tbody id="student-table-body">
-                <!-- Dữ liệu sinh viên sẽ được tải vào đây -->
+            <tbody>
+                {{#each students}}
+                <tr>
+                    <td>{{this.mssv}}</td>
+                    <td>{{this.họVàTên}}</td>
+                    <td>{{this.ngàySinh}}</td>
+                    <td>{{this.giớiTính}}</td>
+                    <td>{{this.khoa}}</td>
+                    <td>{{this.khóa}}</td>
+                    <td>{{this.chươngTrình}}</td>
+                    <td>{{this.địaChỉ}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.sốĐiệnThoại}}</td>
+                    <td>{{this.tìnhTrạng}}</td>
+                    <td>
+                        <button onclick="editStudent('{{this._id}}')"
+                            class="edit-btn bg-[#04B2D9] text-white px-2 py-1 rounded mt-1">Sửa</button>
+                        <button onclick="deleteStudent('{{this._id}}')"
+                            class="delete-btn bg-[#FEA6B6] text-white px-2 py-1 rounded mt-1">Xóa</button>
+                    </td>
+
+                </tr>
+                {{/each}}
             </tbody>
+
         </table>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
 <script>
+
+    // Xuất CSV
+    document.getElementById("export-csv-btn").addEventListener("click", function () {
+        fetch('/list')
+            .then(response => response.json())
+            .then(students => {
+                if (students.length === 0) {
+                    alert("Không có dữ liệu để xuất!");
+                    return;
+                }
+
+                let csvContent = "MSSV,Họ và tên,Ngày sinh,Giới tính,Khoa,Khóa,Chương trình,Địa chỉ,Email,Số điện thoại,Tình trạng\n";
+
+                students.forEach(student => {
+                    let row = [
+                        student.mssv, student.họVàTên, student.ngàySinh, student.giớiTính,
+                        student.khoa, student.khóa, student.chươngTrình, student.địaChỉ,
+                        student.email, student.sốĐiệnThoại, student.tìnhTrạng
+                    ].map(field => `"${field}"`).join(",");
+
+                    csvContent += row + "\n";
+                });
+
+                const BOM = "\uFEFF"; // Byte Order Mark
+                const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
+
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "danh_sach_sinh_vien.csv";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch(error => console.log("Lỗi tải dữ liệu CSV:", error));
+    });
+
+    // Xuất Excel
+    document.getElementById("export-excel-btn").addEventListener("click", function () {
+        fetch('/list')
+            .then(response => response.json())
+            .then(students => {
+                if (students.length === 0) {
+                    alert("Không có dữ liệu để xuất!");
+                    return;
+                }
+
+                const header = [
+                    "MSSV", "Họ và tên", "Ngày sinh", "Giới tính", "Khoa", "Khóa",
+                    "Chương trình", "Địa chỉ", "Email", "Số điện thoại", "Tình trạng"
+                ];
+
+                const data = students.map(student => [
+                    student.mssv, student.họVàTên, student.ngàySinh, student.giớiTính,
+                    student.khoa, student.khóa, student.chươngTrình, student.địaChỉ,
+                    student.email, student.sốĐiệnThoại, student.tìnhTrạng
+                ]);
+
+                const ws = XLSX.utils.aoa_to_sheet([header, ...data]);
+                ws['!cols'] = header.map(() => ({ wch: 20 }));
+
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Danh sách sinh viên");
+
+                XLSX.writeFile(wb, "danh_sach_sinh_vien.xlsx");
+            })
+            .catch(error => console.log("Lỗi tải dữ liệu Excel:", error));
+    });
+
+    // Import CSV/Excel
+    document.getElementById("import-file").addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+
+            const students = XLSX.utils.sheet_to_json(sheet);
+
+            fetch('/import', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(students)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    alert(result.message);
+                    location.reload();
+                })
+                .catch(error => console.log("Lỗi nhập dữ liệu:", error));
+        };
+
+        reader.readAsArrayBuffer(file);
+    });
+
     const khoaOptions = ["Khoa Luật", "Khoa Tiếng Anh thương mại", "Khoa Tiếng Nhật", "Khoa Tiếng Pháp"];
     const tinhTrangOptions = ["Đang học", "Đã tốt nghiệp", "Đã thôi học", "Tạm dừng học"];
-    
+
     const labels = {
-        mssv: "Mã số sinh viên",
         họVàTên: "Họ và Tên",
         ngàySinh: "Ngày sinh",
         giớiTính: "Giới tính",
@@ -43,62 +189,178 @@
         tìnhTrạng: "Tình trạng sinh viên"
     };
 
-    function loadStudents() {
-        const students = JSON.parse(localStorage.getItem("students")) || [];
-        const tableBody = document.getElementById("student-table-body");
-        tableBody.innerHTML = "";
-
-        if (students.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="12" class="text-center py-4">Không có sinh viên nào!</td></tr>`;
+    async function editStudent(studentId) {
+        if (!studentId) {
+            alert("Lỗi: ID sinh viên không hợp lệ!");
             return;
         }
 
-        students.forEach((student, index) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td class="text-[13px] border px-3 py-2 text-center">${student.mssv || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.họVàTên || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.ngàySinh || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.giớiTính || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.khoa || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.khóa || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.chươngTrình || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.địaChỉ || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.email || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.sốĐiệnThoại || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">${student.tìnhTrạng || "N/A"}</td>
-                <td class="text-[13px] border px-3 py-2 text-center">
-                    <button onclick="editStudent(${index})" class="bg-[#04B2D9] text-white px-2 py-1 rounded">Sửa</button>
-                    <button onclick="deleteStudent(${index})" class="bg-[#FEA6B6] text-white px-2 py-1 rounded">Xóa</button>
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
+        try {
+            let response = await fetch(`/students/${studentId}`);
+            if (!response.ok) throw new Error(`Lỗi API: ${response.status}`);
+
+            let student = await response.json();
+
+            let khoaOptions = ["Khoa Luật", "Khoa Tiếng Anh thương mại", "Khoa Tiếng Nhật", "Khoa Tiếng Pháp"];
+            let khoaSelectOptions = khoaOptions.map(k =>
+                `<option value="${k}" ${student.khoa === k ? "selected" : ""}>${k}</option>`
+            ).join("");
+
+            let formHtml = `
+            <div id="edit-form" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-[500px]">
+                    <h2 class="text-xl font-bold text-center mb-4">Chỉnh sửa thông tin sinh viên</h2>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold">Mã số sinh viên</label>
+                            <input type="text" id="edit-mssv" value="${student.mssv}" class="w-full p-2 border rounded" readonly>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Họ và Tên</label>
+                            <input type="text" id="edit-name" value="{{this.họVàTên}}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Ngày sinh</label>
+                            <input type="date" id="edit-birthday" value="${student.ngàySinh}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Giới tính</label>
+                            <select id="edit-gender" class="w-full p-2 border rounded">
+                                <option value="Nam" ${student.giớiTính === "Nam" ? "selected" : ""}>Nam</option>
+                                <option value="Nữ" ${student.giớiTính === "Nữ" ? "selected" : ""}>Nữ</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Khoa</label>
+                            <select id="edit-faculty" class="w-full p-2 border rounded">
+                                ${khoaSelectOptions}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Khóa</label>
+                            <input type="text" id="edit-course" value="${student.khóa}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Chương trình</label>
+                            <input type="text" id="edit-program" value="${student.chươngTrình}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Địa chỉ</label>
+                            <input type="text" id="edit-address" value="${student.địaChỉ}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Email</label>
+                            <input type="email" id="edit-email" value="${student.email}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold">Số điện thoại</label>
+                            <input type="text" id="edit-phone" value="${student.sốĐiệnThoại}" class="w-full p-2 border rounded">
+                        </div>
+
+                        <div class="col-span-2">
+                            <label class="block font-semibold">Tình trạng sinh viên</label>
+                            <select id="edit-status" class="w-full p-2 border rounded">
+                                <option value="Đang học" ${student.tìnhTrạng === "Đang học" ? "selected" : ""}>Đang học</option>
+                                <option value="Đã tốt nghiệp" ${student.tìnhTrạng === "Đã tốt nghiệp" ? "selected" : ""}>Đã tốt nghiệp</option>
+                                <option value="Đã thôi học" ${student.tìnhTrạng === "Đã thôi học" ? "selected" : ""}>Đã thôi học</option>
+                                <option value="Tạm dừng học" ${student.tìnhTrạng === "Tạm dừng học" ? "selected" : ""}>Tạm dừng học</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button onclick="saveEdit('${student._id}')" class="bg-[#04B2D9]  text-white px-4 py-2 rounded">Lưu</button>
+                        <button onclick="closeEditForm()" class="bg-gray-400 text-white px-4 py-2 rounded">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            document.body.insertAdjacentHTML("beforeend", formHtml);
+        } catch (error) {
+            console.error("Lỗi khi lấy dữ liệu sinh viên:", error);
+            alert("Không thể lấy thông tin sinh viên.");
+        }
     }
-    function deleteStudent(index) {
-        let students = JSON.parse(localStorage.getItem("students")) || [];
-        students.splice(index, 1);
-        localStorage.setItem("students", JSON.stringify(students));
-        loadStudents();
+
+    function closeEditForm() {
+        let form = document.getElementById("edit-form");
+        if (form) form.remove();
     }
-    function editStudent(index) {
-        let students = JSON.parse(localStorage.getItem("students")) || [];
-        let student = students[index];
-        
-        Object.keys(student).forEach(key => {
-            if (key === "khoa") {
-                student[key] = promptSelect("Chọn khoa mới:", khoaOptions, student[key]);
-            } else if (key === "tìnhTrạng") {
-                student[key] = promptSelect("Chọn tình trạng mới:", tinhTrangOptions, student[key]);
-            } else {
-                let newValue = prompt(`Nhập ${labels[key]} mới:`, student[key]);
-                if (newValue !== null) student[key] = newValue;
-            }
+
+
+
+
+async function saveEdit(studentId) {
+    let updatedStudent = {
+        họVàTên: document.querySelector("#edit-name")?.value.trim() || "",
+        email: document.querySelector("#edit-email")?.value.trim() || "",
+        ngàySinh: document.querySelector("#edit-birthday")?.value || "",
+        giớiTính: document.querySelector("#edit-gender")?.value || "",
+        khoa: document.querySelector("#edit-faculty")?.value || "",
+        khóa: document.querySelector("#edit-course")?.value || "",
+        chươngTrình: document.querySelector("#edit-program")?.value || "",
+        địaChỉ: document.querySelector("#edit-address")?.value || "",
+        sốĐiệnThoại: document.querySelector("#edit-phone")?.value || "",
+        tìnhTrạng: document.querySelector("#edit-status")?.value || ""
+    };
+
+    console.log("Dữ liệu gửi lên server:", updatedStudent); // Kiểm tra log dữ liệu trước khi gửi
+
+    try {
+        let response = await fetch(`/students/${studentId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },  // Gửi dữ liệu dạng JSON
+            body: JSON.stringify(updatedStudent)
         });
-        
-        students[index] = student;
-        localStorage.setItem("students", JSON.stringify(students));
-        loadStudents();
+
+        let result = await response.json();
+        console.log("Phản hồi từ server:", result);
+
+        alert(result.message);
+
+        if (response.ok) {
+            location.reload();
+        }
+    } catch (error) {
+        console.error("Lỗi khi cập nhật:", error);
+        alert("Không thể cập nhật thông tin.");
+    }
+}
+
+
+
+
+
+
+    function deleteStudent(studentId) {
+        if (!studentId) {
+            alert("Lỗi: ID sinh viên không hợp lệ!");
+            return;
+        }
+
+        if (confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
+            fetch(`/students/${studentId}`, { method: "DELETE" })
+                .then(response => response.json())
+                .then(result => {
+                    alert(result.message);
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error("Lỗi khi xóa:", error);
+                    alert("Không thể xóa sinh viên.");
+                });
+        }
     }
 
     function promptSelect(message, options, currentValue) {
@@ -107,5 +369,4 @@
         return options[selectedIndex - 1] || currentValue;
     }
 
-    document.addEventListener("DOMContentLoaded", loadStudents);
 </script>
