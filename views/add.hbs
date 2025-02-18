@@ -1,0 +1,106 @@
+<div class="bg-white p-7 rounded-lg shadow-md">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Thêm sinh viên mới</h1>
+    <form id="add-student-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Mã số sinh viên</label>
+            <input type="text" id="student-mssv" placeholder="Nhập MSSV" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Họ và tên</label>
+            <input type="text" id="student-họ-và-tên" placeholder="Nhập họ và tên" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Ngày sinh</label>
+            <input type="date" id="student-ngày-sinh" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Giới tính</label>
+            <input type="text" id="student-giới-tính" placeholder="Nhập giới tính" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Khoa</label>
+            <select id="student-khoa" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                <option value="">Chọn khoa</option>
+                <option value="Khoa Luật">Khoa Luật</option>
+                <option value="Khoa Tiếng Anh thương mại">Khoa Tiếng Anh thương mại</option>
+                <option value="Khoa Tiếng Nhật">Khoa Tiếng Nhật</option>
+                <option value="Khoa Tiếng Pháp">Khoa Tiếng Pháp</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Khóa</label>
+            <input type="text" id="student-khóa" placeholder="Nhập khóa" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Chương trình</label>
+            <input type="text" id="student-chương-trình" placeholder="Nhập chương trình" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Địa chỉ</label>
+            <input type="text" id="student-địa-chỉ" placeholder="Nhập địa chỉ" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Email</label>
+            <input type="email" id="student-email" placeholder="Nhập email" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Số điện thoại liên hệ</label>
+            <input type="text" id="student-số-điện-thoại" placeholder="Nhập số điện thoại" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        </div>
+        <div>
+            <label class="block text-lg font-medium text-gray-700">Tình trạng sinh viên</label>
+            <select id="student-tình-trạng" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+                <option value="">Chọn tình trạng</option>
+                <option value="Đang học">Đang học</option>
+                <option value="Đã tốt nghiệp">Đã tốt nghiệp</option>
+                <option value="Đã thôi học">Đã thôi học</option>
+                <option value="Tạm dừng học">Tạm dừng học</option>
+            </select>
+        </div>
+    </form>
+    <button type="submit" id="add-student-btn" class="mt-4 bg-[#FEA6B6] text-white font-medium px-6 py-2 rounded-lg hover:bg-white hover:text-black border border-gray-300 transition duration-200">
+        Thêm sinh viên
+    </button>
+</div>
+
+<script>
+    document.getElementById("add-student-btn").addEventListener("click", function (event) {
+        event.preventDefault();
+        
+        const email = document.getElementById("student-email").value.trim();
+        const phone = document.getElementById("student-số-điện-thoại").value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^\d{10,11}$/;
+        
+        if (!emailRegex.test(email)) {
+            alert("Email không hợp lệ!");
+            return;
+        }
+        
+        if (!phoneRegex.test(phone)) {
+            alert("Số điện thoại phải là số và bao gồm từ 10 đến 11 chữ số!");
+            return;
+        }
+        
+        let student = {
+            mssv: document.getElementById("student-mssv").value.trim(),
+            họVàTên: document.getElementById("student-họ-và-tên").value.trim(),
+            ngàySinh: document.getElementById("student-ngày-sinh").value.trim(),
+            giớiTính: document.getElementById("student-giới-tính").value.trim(),
+            khoa: document.getElementById("student-khoa").value.trim(),
+            khóa: document.getElementById("student-khóa").value.trim(),
+            chươngTrình: document.getElementById("student-chương-trình").value.trim(),
+            địaChỉ: document.getElementById("student-địa-chỉ").value.trim(),
+            email: email,
+            sốĐiệnThoại: phone,
+            tìnhTrạng: document.getElementById("student-tình-trạng").value.trim()
+        };
+
+        let students = JSON.parse(localStorage.getItem("students")) || [];
+        students.push(student);
+        localStorage.setItem("students", JSON.stringify(students));
+
+        alert("Thêm sinh viên thành công!");
+        document.getElementById("add-student-form").reset();
+    });
+</script>

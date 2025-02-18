@@ -1,0 +1,65 @@
+<div class="bg-white p-7 rounded-lg shadow-md text-center">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Tìm kiếm sinh viên</h1>
+    <input type="text" id="search-input" placeholder="Nhập MSSV hoặc Họ tên" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+    <button id="search-btn" class="bg-[#FEA6B6] text-white px-6 py-2 rounded-lg mt-4">Tìm kiếm</button>
+    <div class="overflow-x-auto mt-6">
+        <table class="table-auto w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden text-center">
+            <thead class="bg-gray-300 text-black">
+                <tr>
+                    <th class="px-3 py-2 text-[15px] font-medium">MSSV</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Họ và tên</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Ngày sinh</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Giới tính</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Khoa</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Khóa</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Chương trình</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Địa chỉ</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Email</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Số điện thoại liên hệ</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Tình trạng sinh viên</th>
+                </tr>
+            </thead>
+            <tbody id="search-results-body">
+                <!-- Kết quả tìm kiếm sẽ hiển thị ở đây -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.getElementById("search-btn").addEventListener("click", function () {
+        const query = document.getElementById("search-input").value.toLowerCase().trim();
+        const students = JSON.parse(localStorage.getItem("students")) || [];
+        const resultsBody = document.getElementById("search-results-body");
+        resultsBody.innerHTML = "";
+
+        const filteredStudents = students.filter(student =>
+            (student["mssv"] && student["mssv"].toLowerCase().includes(query)) ||
+            (student["họ-và-tên"] && student["họ-và-tên"].toLowerCase().includes(query)) ||
+            (student["họVàTên"] && student["họVàTên"].toLowerCase().includes(query))
+        );
+
+        if (filteredStudents.length === 0) {
+            resultsBody.innerHTML = `<tr><td colspan="11" class="text-center py-4">Không tìm thấy kết quả</td></tr>`;
+            return;
+        }
+
+        filteredStudents.forEach(student => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td class="text-[13px] border px-3 py-2 text-center">${student["mssv"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["họ-và-tên"] || student["họVàTên"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["ngày-sinh"] || student["ngàySinh"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["giới-tính"] || student["giớiTính"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["khoa"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["khóa"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["chương-trình"] || student["chươngTrình"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["địa-chỉ"] || student["địaChỉ"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["email"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["số-điện-thoại"] || student["sốĐiệnThoại"] || "N/A"}</td>
+                <td class="text-[13px] border px-3 py-2 text-center">${student["tình-trạng"] || student["tìnhTrạng"] || "N/A"}</td>
+            `;
+            resultsBody.appendChild(row);
+        });
+    });
+</script>
