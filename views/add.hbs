@@ -3,19 +3,23 @@
     <form id="add-student-form" method="POST" action="/add" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
             <label class="block text-lg font-medium text-gray-700">Mã số sinh viên</label>
-            <input type="text" name="mssv" placeholder="Nhập MSSV" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="text" name="mssv" placeholder="Nhập MSSV" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Họ và tên</label>
-            <input type="text" name="họVàTên" placeholder="Nhập họ và tên" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="text" name="họVàTên" placeholder="Nhập họ và tên" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Ngày sinh</label>
-            <input type="date" name="ngàySinh" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="date" name="ngàySinh" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Giới tính</label>
-            <select name="giớiTính" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <select name="giớiTính" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
                 <option value="">Chọn giới tính</option>
                 <option value="Nam">Nam</option>
                 <option value="Nữ">Nữ</option>
@@ -23,46 +27,54 @@
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Khoa</label>
-            <select name="khoa" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
-                <option value="">Chọn khoa</option>
-                <option value="Khoa Luật">Khoa Luật</option>
-                <option value="Khoa Tiếng Anh thương mại">Khoa Tiếng Anh thương mại</option>
-                <option value="Khoa Tiếng Nhật">Khoa Tiếng Nhật</option>
-                <option value="Khoa Tiếng Pháp">Khoa Tiếng Pháp</option>
-            </select>
+            <select id="khoaSelect" name="khoa"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm"></select>
+            <button onclick="addNewConfigItem('departments')" type="button"
+                class="mt-2 bg-[#D7E7A9] text-black px-3 py-1 rounded">Thêm Khoa</button>
+            <button onclick="deleteConfigItem('departments')" type="button"
+                class="mt-2 bg-[#B5DDD1] text-black px-3 py-1 rounded">Xóa Khoa</button>
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Khóa</label>
-            <input type="text" name="khóa" placeholder="Nhập khóa" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="text" name="khóa" placeholder="Nhập khóa" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Chương trình</label>
-            <input type="text" name="chươngTrình" placeholder="Nhập chương trình" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <select id="chuongTrinhSelect" name="chươngTrình"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm"></select>
+            <button onclick="addNewConfigItem('programs')" type="button"
+                class="mt-2 bg-[#D7E7A9] text-black px-3 py-1 rounded">Thêm Chương trình</button>
+            <button onclick="deleteConfigItem('programs')" type="button"
+                class="mt-2 bg-[#B5DDD1] text-black px-3 py-1 rounded">Xóa Chương trình</button>
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Địa chỉ</label>
-            <input type="text" name="địaChỉ" placeholder="Nhập địa chỉ" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="text" name="địaChỉ" placeholder="Nhập địa chỉ" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Email</label>
-            <input type="email" name="email" placeholder="Nhập email" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="email" name="email" placeholder="Nhập email" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Số điện thoại liên hệ</label>
-            <input type="text" name="sốĐiệnThoại" placeholder="Nhập số điện thoại" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <input type="text" name="sốĐiệnThoại" placeholder="Nhập số điện thoại" required
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Tình trạng sinh viên</label>
-            <select name="tìnhTrạng" required class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
-                <option value="">Chọn tình trạng</option>
-                <option value="Đang học">Đang học</option>
-                <option value="Đã tốt nghiệp">Đã tốt nghiệp</option>
-                <option value="Đã thôi học">Đã thôi học</option>
-                <option value="Tạm dừng học">Tạm dừng học</option>
-            </select>
+            <select id="tinhTrangSelect" name="tìnhTrạng"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm"></select>
+            <button onclick="addNewConfigItem('statuses')" type="button"
+                class="mt-2 bg-[#D7E7A9] text-black px-3 py-1 rounded">Thêm Tình trạng</button>
+            <button onclick="deleteConfigItem('statuses')" type="button"
+                class="mt-2 bg-[#B5DDD1] text-black px-3 py-1 rounded">Xóa Tình trạng</button>
         </div>
         <div class="col-span-2 text-center">
-            <button type="submit" class="mt-4 bg-[#FEA6B6] text-white font-medium px-6 py-2 rounded-lg hover:bg-white hover:text-black border border-gray-300 transition duration-200">
+            <button type="submit"
+                class="mt-4 bg-[#FEA6B6] text-white font-medium px-6 py-2 rounded-lg hover:bg-white hover:text-black border border-gray-300 transition duration-200">
                 Thêm sinh viên
             </button>
         </div>
@@ -70,27 +82,88 @@
 </div>
 
 <script>
-document.getElementById("add-student-form").addEventListener("submit", function(event) {
-    const emailInput = document.querySelector("input[name='email']");
-    const phoneInput = document.querySelector("input[name='sốĐiệnThoại']");
+    document.getElementById("add-student-form").addEventListener("submit", function (event) {
+        const emailInput = document.querySelector("input[name='email']");
+        const phoneInput = document.querySelector("input[name='sốĐiệnThoại']");
 
-    const email = emailInput.value.trim();
-    const phone = phoneInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
 
-    // Biểu thức chính quy kiểm tra email
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(email)) {
-        alert("Email không hợp lệ! Vui lòng nhập đúng định dạng (ví dụ: example@gmail.com).");
-        event.preventDefault(); // Ngăn chặn form gửi đi
-        return;
+        // Biểu thức chính quy kiểm tra email
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email)) {
+            alert("Email không hợp lệ! Vui lòng nhập đúng định dạng (ví dụ: example@gmail.com).");
+            event.preventDefault(); // Ngăn chặn form gửi đi
+            return;
+        }
+
+        // Biểu thức chính quy kiểm tra số điện thoại (chỉ chứa số, 10-11 số)
+        const phonePattern = /^[0-9]{10,11}$/;
+        if (!phonePattern.test(phone)) {
+            alert("Số điện thoại không hợp lệ! Vui lòng nhập số có 10 hoặc 11 chữ số.");
+            event.preventDefault();
+            return;
+        }
+    });
+    async function fetchConfig() {
+        const response = await fetch('/config');
+        const config = await response.json();
+
+        const khoaSelect = document.getElementById('khoaSelect');
+        const tinhTrangSelect = document.getElementById('tinhTrangSelect');
+        const chuongTrinhSelect = document.getElementById('chuongTrinhSelect');
+
+        khoaSelect.innerHTML = '';
+        tinhTrangSelect.innerHTML = '';
+        chuongTrinhSelect.innerHTML = '';
+
+        config.departments.forEach(value => addOptionToSelect(khoaSelect, value));
+        config.statuses.forEach(value => addOptionToSelect(tinhTrangSelect, value));
+        config.programs.forEach(value => addOptionToSelect(chuongTrinhSelect, value));
     }
 
-    // Biểu thức chính quy kiểm tra số điện thoại (chỉ chứa số, 10-11 số)
-    const phonePattern = /^[0-9]{10,11}$/;
-    if (!phonePattern.test(phone)) {
-        alert("Số điện thoại không hợp lệ! Vui lòng nhập số có 10 hoặc 11 chữ số.");
-        event.preventDefault();
-        return;
+    function addOptionToSelect(select, value) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
     }
-});
+
+    async function addNewConfigItem(type) {
+        const value = prompt(`Nhập giá trị mới cho ${type}:`);
+        if (!value) return;
+
+        const response = await fetch('/config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, value })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+
+        fetchConfig();
+    }
+
+    async function deleteConfigItem(type) {
+        const selectElement = document.getElementById(type === 'departments' ? 'khoaSelect' : type === 'statuses' ? 'tinhTrangSelect' : 'chuongTrinhSelect');
+        const value = selectElement.value;
+
+        if (!value) return alert("Vui lòng chọn giá trị cần xóa.");
+
+        const response = await fetch('/config', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, value })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+
+        fetchConfig();
+    }
+
+
+    document.addEventListener("DOMContentLoaded", fetchConfig);
+
 </script>

@@ -201,9 +201,21 @@
 
             let student = await response.json();
 
-            let khoaOptions = ["Khoa Luật", "Khoa Tiếng Anh thương mại", "Khoa Tiếng Nhật", "Khoa Tiếng Pháp"];
-            let khoaSelectOptions = khoaOptions.map(k =>
+            let departments = JSON.parse(localStorage.getItem("departments")) || [];
+            let statuses = JSON.parse(localStorage.getItem("statuses")) || [];
+            let programs = JSON.parse(localStorage.getItem("programs")) || [];
+
+            // Tạo danh sách select options
+            let khoaSelectOptions = departments.map(k =>
                 `<option value="${k}" ${student.khoa === k ? "selected" : ""}>${k}</option>`
+            ).join("");
+
+            let programSelectOptions = programs.map(p =>
+                `<option value="${p}" ${student.chươngTrình === p ? "selected" : ""}>${p}</option>`
+            ).join("");
+
+            let statusSelectOptions = statuses.map(s =>
+                `<option value="${s}" ${student.tìnhTrạng === s ? "selected" : ""}>${s}</option>`
             ).join("");
 
             let formHtml = `
@@ -249,9 +261,10 @@
 
                         <div>
                             <label class="block font-semibold">Chương trình</label>
-                            <input type="text" id="edit-program" value="${student.chươngTrình}" class="w-full p-2 border rounded">
+                            <select id="edit-program" class="w-full p-2 border rounded">
+                            ${programSelectOptions}
+                            </select>
                         </div>
-
                         <div>
                             <label class="block font-semibold">Địa chỉ</label>
                             <input type="text" id="edit-address" value="${student.địaChỉ}" class="w-full p-2 border rounded">
@@ -270,10 +283,7 @@
                         <div class="col-span-2">
                             <label class="block font-semibold">Tình trạng sinh viên</label>
                             <select id="edit-status" class="w-full p-2 border rounded">
-                                <option value="Đang học" ${student.tìnhTrạng === "Đang học" ? "selected" : ""}>Đang học</option>
-                                <option value="Đã tốt nghiệp" ${student.tìnhTrạng === "Đã tốt nghiệp" ? "selected" : ""}>Đã tốt nghiệp</option>
-                                <option value="Đã thôi học" ${student.tìnhTrạng === "Đã thôi học" ? "selected" : ""}>Đã thôi học</option>
-                                <option value="Tạm dừng học" ${student.tìnhTrạng === "Tạm dừng học" ? "selected" : ""}>Tạm dừng học</option>
+                                ${statusSelectOptions}
                             </select>
                         </div>
                     </div>
@@ -298,45 +308,42 @@
         if (form) form.remove();
     }
 
+    async function saveEdit(studentId) {
+        let updatedStudent = {
+            họVàTên: document.querySelector("#edit-name")?.value.trim() || "",
+            email: document.querySelector("#edit-email")?.value.trim() || "",
+            ngàySinh: document.querySelector("#edit-birthday")?.value || "",
+            giớiTính: document.querySelector("#edit-gender")?.value || "",
+            khoa: document.querySelector("#edit-faculty")?.value || "",
+            khóa: document.querySelector("#edit-course")?.value || "",
+            chươngTrình: document.querySelector("#edit-program")?.value || "",
+            địaChỉ: document.querySelector("#edit-address")?.value || "",
+            sốĐiệnThoại: document.querySelector("#edit-phone")?.value || "",
+            tìnhTrạng: document.querySelector("#edit-status")?.value || ""
+        };
 
+        console.log("Dữ liệu gửi lên server:", updatedStudent); // Kiểm tra log dữ liệu trước khi gửi
 
+        try {
+            let response = await fetch(`/students/${studentId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },  // Gửi dữ liệu dạng JSON
+                body: JSON.stringify(updatedStudent)
+            });
 
-async function saveEdit(studentId) {
-    let updatedStudent = {
-        họVàTên: document.querySelector("#edit-name")?.value.trim() || "",
-        email: document.querySelector("#edit-email")?.value.trim() || "",
-        ngàySinh: document.querySelector("#edit-birthday")?.value || "",
-        giớiTính: document.querySelector("#edit-gender")?.value || "",
-        khoa: document.querySelector("#edit-faculty")?.value || "",
-        khóa: document.querySelector("#edit-course")?.value || "",
-        chươngTrình: document.querySelector("#edit-program")?.value || "",
-        địaChỉ: document.querySelector("#edit-address")?.value || "",
-        sốĐiệnThoại: document.querySelector("#edit-phone")?.value || "",
-        tìnhTrạng: document.querySelector("#edit-status")?.value || ""
-    };
+            let result = await response.json();
+            console.log("Phản hồi từ server:", result);
 
-    console.log("Dữ liệu gửi lên server:", updatedStudent); // Kiểm tra log dữ liệu trước khi gửi
+            alert(result.message);
 
-    try {
-        let response = await fetch(`/students/${studentId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },  // Gửi dữ liệu dạng JSON
-            body: JSON.stringify(updatedStudent)
-        });
-
-        let result = await response.json();
-        console.log("Phản hồi từ server:", result);
-
-        alert(result.message);
-
-        if (response.ok) {
-            location.reload();
+            if (response.ok) {
+                location.reload();
+            }
+        } catch (error) {
+            console.error("Lỗi khi cập nhật:", error);
+            alert("Không thể cập nhật thông tin.");
         }
-    } catch (error) {
-        console.error("Lỗi khi cập nhật:", error);
-        alert("Không thể cập nhật thông tin.");
     }
-}
 
 
 
@@ -368,5 +375,16 @@ async function saveEdit(studentId) {
         let selectedIndex = prompt(`${message}\n${optionString}`, options.indexOf(currentValue) + 1);
         return options[selectedIndex - 1] || currentValue;
     }
+
+    async function fetchConfig() {
+        const response = await fetch('/config');
+        const config = await response.json();
+
+        localStorage.setItem("departments", JSON.stringify(config.departments));
+        localStorage.setItem("statuses", JSON.stringify(config.statuses));
+        localStorage.setItem("programs", JSON.stringify(config.programs));
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchConfig);
 
 </script>
