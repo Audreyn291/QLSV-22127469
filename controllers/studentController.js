@@ -5,11 +5,38 @@ import fs from 'fs';
 import ExcelJS from 'exceljs';
 import multer from 'multer';
 import logger from "../utils/logger.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Trang chủ
 export const getHome = (req, res) => {
   logger.info("Truy cập trang chủ");
   res.render('home');
+};
+
+// Lấy đường dẫn hiện tại
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Lấy phiên bản và ngày build từ package.json
+const packageJsonPath = path.join(__dirname, '../package.json');
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+
+const buildDatePath = path.join(__dirname, '../build-date.txt');
+
+// Ghi ngày build khi server khởi động
+if (!fs.existsSync(buildDatePath)) {
+  fs.writeFileSync(buildDatePath, new Date().toISOString());
+}
+const buildDate = fs.readFileSync(buildDatePath, 'utf-8');
+
+// API trả về phiên bản và ngày build
+export const getAppInfo = (req, res) => {
+  logger.info("Lấy thông tin phiên bản ứng dụng.");
+  res.json({
+    version: packageJson.version,
+    buildDate: buildDate
+  });
 };
 
 // Thiết lập multer để upload file
@@ -125,7 +152,7 @@ export const importData = async (req, res) => {
     }
 
     await Student.insertMany(students);
-    fs.unlinkSync(filePath); 
+    fs.unlinkSync(filePath);
     logger.info("Import dữ liệu thành công!");
     res.json({ message: "Import dữ liệu thành công!", students });
   } catch (error) {

@@ -2,6 +2,7 @@ import { getHome, getAddStudent, getStudentList, getSearchStudent, postAddStuden
 import { getStudentById, deleteStudent, updateStudent } from '../controllers/studentController.js';
 import { getConfig, addConfigItem, deleteConfigItem } from '../controllers/studentController.js';
 import { exportJSON, exportExcel, importData } from '../controllers/studentController.js';
+import { getAppInfo } from '../controllers/studentController.js';
 import express from 'express';
 import multer from 'multer';
 import logger from '../utils/logger.js';
@@ -36,5 +37,6 @@ router.use((req, res, next) => {
     next();
 });
 
+router.get('/api/version', getAppInfo);  // Lấy thông tin phiên bản
 
 export default router;

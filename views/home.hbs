@@ -3,7 +3,43 @@
     <p class="text-gray-600 mt-4">Vui lòng chọn tính năng mong muốn!</p>
     <div class="mt-6 flex justify-center gap-4">
         <a href="/add" class="bg-[#625DB9] text-white px-4 py-2 rounded-lg shadow hover:bg-[#3B3DA1]">Thêm sinh viên</a>
-        <a href="/search" class="bg-[#FEA6B6] text-white px-4 py-2 rounded-lg shadow hover:bg-[#ECA6CA]">Tìm kiếm sinh viên</a>
-        <a href="/list" class="bg-[#04B2D9] text-white px-4 py-2 rounded-lg shadow hover:bg-[#0487D9]">Danh sách sinh viên</a>
+        <a href="/search" class="bg-[#FEA6B6] text-white px-4 py-2 rounded-lg shadow hover:bg-[#ECA6CA]">Tìm kiếm sinh
+            viên</a>
+        <a href="/list" class="bg-[#04B2D9] text-white px-4 py-2 rounded-lg shadow hover:bg-[#0487D9]">Danh sách sinh
+            viên</a>
     </div>
+    
+    <!-- Nằm ở dưới các box chức năng -->
+    {{!-- <div class="mt-10 text-center text-gray-500 flex justify-center items-center gap-4">
+        <p>Phiên bản: <span id="app-version" class="font-semibold">Đang lấy dữ liệu...</span></p>
+        <span class="text-gray-400">|</span>
+        <p>Ngày build: <span id="build-date" class="font-semibold">Đang lấy dữ liệu...</span></p>
+    </div> --}}
+
+    <!-- Nằm ở cuối trang -->
+    <footer class="fixed bottom-0 left-0 w-full text-center text-gray-500 py-4 shadow-md">
+        <div class="flex justify-center items-center gap-4">
+            <p>Phiên bản: <span id="app-version" class="font-semibold">Đang lấy dữ liệu...</span></p>
+            <span class="text-gray-400">|</span>
+            <p>Ngày build: <span id="build-date" class="font-semibold">Đang lấy dữ liệu...</span></p>
+        </div>
+    </footer>
+
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            const response = await fetch("/api/version");
+            const data = await response.json();
+
+            // Chỉ lấy ngày (YYYY-MM-DD)
+            const buildDate = new Date(data.buildDate).toISOString().split('T')[0];
+
+            document.getElementById("app-version").textContent = data.version;
+            document.getElementById("build-date").textContent = buildDate;
+        } catch (error) {
+            console.error("Lỗi khi lấy thông tin phiên bản:", error);
+        }
+    });
+</script>
