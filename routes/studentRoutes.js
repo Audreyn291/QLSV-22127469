@@ -1,9 +1,8 @@
 import express from 'express';
-import { getHome, getAddStudent, getStudentList, getSearchStudent, postAddStudent } from '../controllers/studentController.js';
+const router = express.Router();
+import { getHome, getAddStudent, getStudentList, getSearchStudent, postAddStudent, getStudentsByDepartment, getDepartments } from '../controllers/studentController.js';
 import { getStudentById, deleteStudent, updateStudent } from '../controllers/studentController.js';
 import { getConfig, addConfigItem, deleteConfigItem } from '../controllers/studentController.js';
-
-const router = express.Router(); // Định nghĩa router trước khi sử dụng
 
 router.get('/', getHome);
 router.get('/add', getAddStudent);
@@ -19,6 +18,9 @@ router.delete('/students/:id', deleteStudent);  // Định tuyến xóa sinh vi�
 router.get('/config', getConfig);
 router.post('/config', addConfigItem);
 router.delete('/config', deleteConfigItem);
+
+router.get('/api/departments', getDepartments);  // Lấy danh sách khoa
+router.get('/api/students-by-department', getStudentsByDepartment);  // Tìm sinh viên theo khoa
 
 
 export default router;

@@ -1,6 +1,10 @@
 <div class="bg-white p-7 rounded-lg shadow-md text-center">
     <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Tìm kiếm sinh viên</h1>
-    <input type="text" id="search-input" placeholder="Nhập MSSV hoặc Họ tên" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+    <select id="department-select" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        <option value="">Chọn khoa</option>
+    </select>
+    <input type="text" id="search-input" placeholder="Nhập MSSV hoặc Họ tên"
+        class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
     <button id="search-btn" class="bg-[#FEA6B6] text-white px-6 py-2 rounded-lg mt-4">Tìm kiếm</button>
     <div class="overflow-x-auto mt-6">
         <table class="table-auto w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden text-center">
@@ -27,29 +31,29 @@
 </div>
 
 <script>
-document.getElementById("search-btn").addEventListener("click", async function () {
-    const query = document.getElementById("search-input").value.trim();
-    if (!query) {
-        alert("Vui lòng nhập MSSV hoặc Họ tên để tìm kiếm.");
-        return;
-    }
-
-    try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`); // Gọi API đúng endpoint
-        const students = await response.json();
-        console.log("Dữ liệu trả về từ API:", students); // Debug API response
-
-        const resultsBody = document.getElementById("search-results-body");
-        resultsBody.innerHTML = "";
-
-        if (!students.length) {
-            resultsBody.innerHTML = `<tr><td colspan="11" class="text-center py-4">Không tìm thấy kết quả</td></tr>`;
+    document.getElementById("search-btn").addEventListener("click", async function () {
+        const query = document.getElementById("search-input").value.trim();
+        /*if (!query) {
+            alert("Vui lòng nhập MSSV hoặc Họ tên để tìm kiếm.");
             return;
-        }
+        }*/
 
-        students.forEach(student => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
+        try {
+            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`); // Gọi API đúng endpoint
+            const students = await response.json();
+            console.log("Dữ liệu trả về từ API:", students); // Debug API response
+
+            const resultsBody = document.getElementById("search-results-body");
+            resultsBody.innerHTML = "";
+
+            if (!students.length) {
+                resultsBody.innerHTML = `<tr><td colspan="11" class="text-center py-4">Không tìm thấy kết quả</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
                 <td>${student.mssv || "N/A"}</td>
                 <td>${student.họVàTên || "N/A"}</td>
                 <td>${student.ngàySinh || "N/A"}</td>
@@ -62,12 +66,73 @@ document.getElementById("search-btn").addEventListener("click", async function (
                 <td>${student.sốĐiệnThoại || "N/A"}</td>
                 <td>${student.tìnhTrạng || "N/A"}</td>
             `;
-            resultsBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error("Lỗi tìm kiếm:", error);
-        alert("Có lỗi xảy ra khi tìm kiếm sinh viên.");
-    }
-});
+                resultsBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error("Lỗi tìm kiếm:", error);
+            alert("Có lỗi xảy ra khi tìm kiếm sinh viên.");
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        const departmentSelect = document.getElementById("department-select");
+
+        // Gọi API lấy danh sách khoa
+        try {
+            const response = await fetch("/api/departments");
+            const departments = await response.json();
+
+            departments.forEach(department => {
+                const option = document.createElement("option");
+                option.value = department;
+                option.textContent = department;
+                departmentSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Lỗi khi tải danh sách khoa:", error);
+        }
+    });
+
+    document.getElementById("search-btn").addEventListener("click", async function () {
+        const department = document.getElementById("department-select").value;
+        /*if (!department) {
+            alert("Vui lòng chọn khoa.");
+            return;
+        }*/
+
+        try {
+            const response = await fetch(`/api/students-by-department?department=${encodeURIComponent(department)}`);
+            const students = await response.json();
+
+            const resultsBody = document.getElementById("search-results-body");
+            resultsBody.innerHTML = "";
+
+            if (!students.length) {
+                resultsBody.innerHTML = `<tr><td colspan="11" class="text-center py-4">Không tìm thấy sinh viên trong khoa này</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>${student.mssv || "N/A"}</td>
+                <td>${student.họVàTên || "N/A"}</td>
+                <td>${student.ngàySinh || "N/A"}</td>
+                <td>${student.giớiTính || "N/A"}</td>
+                <td>${student.khoa || "N/A"}</td>
+                <td>${student.khóa || "N/A"}</td>
+                <td>${student.chươngTrình || "N/A"}</td>
+                <td>${student.địaChỉ || "N/A"}</td>
+                <td>${student.email || "N/A"}</td>
+                <td>${student.sốĐiệnThoại || "N/A"}</td>
+                <td>${student.tìnhTrạng || "N/A"}</td>
+            `;
+                resultsBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error("Lỗi tìm kiếm:", error);
+            alert("Có lỗi xảy ra khi tìm kiếm.");
+        }
+    });
 
 </script>

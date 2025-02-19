@@ -1,6 +1,7 @@
 import { Student } from '../Database/dbstudents.js';
 import Option from '../models/optionsModel.js';
 import mongoose from 'mongoose';
+
 // Trang chủ
 export const getHome = (req, res) => {
   res.render('home');
@@ -96,14 +97,29 @@ export const getAddStudent = (req, res) => {
 // Xử lý thêm sinh viên mới vào MongoDB
 export const postAddStudent = async (req, res) => {
   try {
-    const newStudent = new Student(req.body); // Tạo sinh viên mới từ dữ liệu form
-    await newStudent.save(); // Lưu vào database
-    res.redirect('/list'); // Chuyển hướng về trang danh sách sinh viên
+    const { khoa } = req.body;
+    let config = await Option.findOne();
+
+    if (!config) {
+      config = new Option();
+    }
+
+    // Nếu khoa chưa tồn tại, thêm vào danh sách
+    if (!config.departments.includes(khoa)) {
+      config.departments.push(khoa);
+      await config.save();
+    }
+
+    const newStudent = new Student(req.body);
+    await newStudent.save();
+
+    res.redirect('/list');
   } catch (error) {
     console.log(error);
     res.status(500).send('Lỗi khi thêm sinh viên');
   }
 };
+
 
 // Tìm kiếm sinh viên theo MSSV hoặc Họ tên
 export const getSearchStudent = async (req, res) => {
@@ -179,8 +195,6 @@ export const updateStudent = async (req, res) => {
   }
 };
 
-
-
 export const getStudentById = async (req, res) => {
   try {
     const student = await Student.findById(req.params.id).lean();
@@ -189,5 +203,34 @@ export const getStudentById = async (req, res) => {
     res.json(student);
   } catch (error) {
     res.status(500).json({ message: "Lỗi khi lấy thông tin sinh viên." });
+  }
+};
+
+// Tìm kiếm sinh viên theo khoa
+export const getStudentsByDepartment = async (req, res) => {
+  try {
+    const department = req.query.department || "";
+    if (!department) {
+      return res.json([]);
+    }
+
+    const students = await Student.find({ khoa: department }).lean();
+    res.json(students);
+  } catch (error) {
+    console.error("Lỗi tìm kiếm sinh viên theo khoa:", error);
+    res.status(500).send("Lỗi khi tìm kiếm sinh viên");
+  }
+};
+
+// Lấy danh sách khoa từ CSDL
+export const getDepartments = async (req, res) => {
+  try {
+    const config = await Option.findOne();
+    if (!config || !config.departments) {
+      return res.json([]);
+    }
+    res.json(config.departments);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi tải danh sách khoa." });
   }
 };
