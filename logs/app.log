@@ -6,3 +6,8 @@
 2025-02-19 20:33:54 [INFO]: Nhận yêu cầu thêm cấu hình - Loại: departments, Giá trị: Khoa Sinh
 2025-02-19 20:33:55 [INFO]: Thêm cấu hình thành công - Loại: departments, Giá trị: Khoa Sinh
 2025-02-19 20:35:20 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-19 21:31:31 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-19 21:31:31 [INFO]: [GET] /favicon.ico
+2025-02-19 21:31:32 [INFO]: Truy cập trang chủ
+2025-02-19 21:31:32 [INFO]: [GET] /api/version
+2025-02-19 21:31:32 [INFO]: Lấy thông tin phiên bản ứng dụng.
