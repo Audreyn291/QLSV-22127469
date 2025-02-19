@@ -11,3 +11,9 @@
 2025-02-19 21:31:32 [INFO]: Truy cập trang chủ
 2025-02-19 21:31:32 [INFO]: [GET] /api/version
 2025-02-19 21:31:32 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-19 21:33:52 [INFO]: Truy cập trang chủ
+2025-02-19 21:33:52 [INFO]: [GET] /api/version
+2025-02-19 21:33:52 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-19 21:33:52 [INFO]: [GET] /favicon.ico
+2025-02-19 21:34:06 [INFO]: Lấy danh sách khoa
+2025-02-19 21:34:10 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
