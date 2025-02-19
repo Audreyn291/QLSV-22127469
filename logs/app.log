@@ -1,0 +1,8 @@
+2025-02-19 20:33:15 [INFO]: [GET] /favicon.ico
+2025-02-19 20:33:15 [INFO]: Lấy danh sách khoa
+2025-02-19 20:33:17 [INFO]: Truy cập trang chủ
+2025-02-19 20:33:20 [INFO]: Lấy danh sách khoa
+2025-02-19 20:33:21 [INFO]: Lấy danh sách sinh viên - Số lượng: 10
+2025-02-19 20:33:54 [INFO]: Nhận yêu cầu thêm cấu hình - Loại: departments, Giá trị: Khoa Sinh
+2025-02-19 20:33:55 [INFO]: Thêm cấu hình thành công - Loại: departments, Giá trị: Khoa Sinh
+2025-02-19 20:35:20 [INFO]: Lấy danh sách sinh viên - Số lượng: 11

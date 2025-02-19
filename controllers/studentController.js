@@ -2,13 +2,13 @@ import { Student } from '../Database/dbstudents.js';
 import Option from '../models/optionsModel.js';
 import mongoose from 'mongoose';
 import fs from 'fs';
-import { parse } from 'json2csv';
 import ExcelJS from 'exceljs';
 import multer from 'multer';
-
+import logger from "../utils/logger.js";
 
 // Trang chủ
 export const getHome = (req, res) => {
+  logger.info("Truy cập trang chủ");
   res.render('home');
 };
 
@@ -19,16 +19,16 @@ const upload = multer({ dest: 'uploads/' });
 export const exportJSON = async (req, res) => {
   try {
     const students = await Student.find().lean();
-
     if (students.length === 0) {
+      logger.warn("Không có dữ liệu để xuất JSON.");
       return res.status(400).json({ message: "Không có dữ liệu để xuất." });
     }
-
+    logger.info(`Xuất JSON thành công - ${students.length} sinh viên.`);
     res.setHeader('Content-Disposition', 'attachment; filename=sinhvien.json');
     res.setHeader('Content-Type', 'application/json');
     res.json(students);
   } catch (error) {
-    console.error("Lỗi xuất JSON:", error);
+    logger.error(`Lỗi xuất JSON: ${error.message}`);
     res.status(500).send("Lỗi khi xuất JSON.");
   }
 };
@@ -37,11 +37,10 @@ export const exportJSON = async (req, res) => {
 export const exportExcel = async (req, res) => {
   try {
     const students = await Student.find().lean();
-
     if (students.length === 0) {
+      logger.warn("Không có dữ liệu để xuất Excel.");
       return res.status(400).json({ message: "Không có dữ liệu để xuất." });
     }
-
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Danh sách sinh viên");
 
@@ -60,14 +59,13 @@ export const exportExcel = async (req, res) => {
     ];
 
     worksheet.addRows(students);
-
+    logger.info(`Xuất Excel thành công - ${students.length} sinh viên.`);
     res.setHeader('Content-Disposition', 'attachment; filename=sinhvien.xlsx');
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
     await workbook.xlsx.write(res);
     res.end();
   } catch (error) {
-    console.error("Lỗi xuất Excel:", error);
+    logger.error(`Lỗi xuất Excel: ${error.message}`);
     res.status(500).send("Lỗi khi xuất Excel.");
   }
 };
@@ -76,6 +74,7 @@ export const exportExcel = async (req, res) => {
 export const importData = async (req, res) => {
   try {
     if (!req.file) {
+      logger.warn("Người dùng không chọn file để import.");
       return res.status(400).json({ message: "Vui lòng chọn file để tải lên." });
     }
 
@@ -83,27 +82,23 @@ export const importData = async (req, res) => {
     const students = [];
 
     if (req.file.mimetype === 'application/json') {
-      // Xử lý file JSON
       try {
         const jsonData = fs.readFileSync(filePath, 'utf-8');
         const parsedData = JSON.parse(jsonData);
         students.push(...parsedData);
+        logger.info(`Nhập dữ liệu từ JSON: ${students.length} bản ghi.`);
       } catch (error) {
-        console.error("Lỗi đọc file JSON:", error);
+        logger.error(`Lỗi đọc file JSON: ${error.message}`);
         return res.status(400).json({ message: "File JSON không hợp lệ." });
       }
-    } else if (
-      req.file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
-      req.file.mimetype === 'application/vnd.ms-excel'
-    ) {
-      // Xử lý file Excel
+    } else if (req.file.mimetype.includes('spreadsheetml')) {
       try {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.readFile(filePath);
         const worksheet = workbook.getWorksheet(1);
 
         worksheet.eachRow((row, rowNumber) => {
-          if (rowNumber > 1) { // Bỏ qua tiêu đề
+          if (rowNumber > 1) {
             students.push({
               mssv: row.getCell(1).value,
               họVàTên: row.getCell(2).value,
@@ -119,21 +114,22 @@ export const importData = async (req, res) => {
             });
           }
         });
+        logger.info(`Nhập dữ liệu từ Excel: ${students.length} bản ghi.`);
       } catch (error) {
-        console.error("Lỗi đọc file Excel:", error);
+        logger.error(`Lỗi đọc file Excel: ${error.message}`);
         return res.status(400).json({ message: "File Excel không hợp lệ." });
       }
     } else {
+      logger.warn("Người dùng tải lên file không hợp lệ.");
       return res.status(400).json({ message: "Chỉ hỗ trợ file JSON hoặc Excel." });
     }
 
-    // Lưu vào database
     await Student.insertMany(students);
-    fs.unlinkSync(filePath); // Xóa file sau khi xử lý xong
-
+    fs.unlinkSync(filePath); 
+    logger.info("Import dữ liệu thành công!");
     res.json({ message: "Import dữ liệu thành công!", students });
   } catch (error) {
-    console.error("Lỗi import dữ liệu:", error);
+    logger.error(`Lỗi import dữ liệu: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi import dữ liệu." });
   }
 };
@@ -143,7 +139,7 @@ export const getConfig = async (req, res) => {
   try {
     let config = await Option.findOne();
     if (!config) {
-      config = new Option(); // Tạo mới nếu không có dữ liệu
+      config = new Option();
       await config.save();
     }
     res.json(config);
@@ -156,7 +152,12 @@ export const getConfig = async (req, res) => {
 export const addConfigItem = async (req, res) => {
   try {
     const { type, value } = req.body;
-    if (!type || !value) return res.status(400).json({ message: "Thiếu dữ liệu đầu vào." });
+    logger.info(`Nhận yêu cầu thêm cấu hình - Loại: ${type}, Giá trị: ${value}`);
+
+    if (!type || !value) {
+      logger.warn("Thiếu dữ liệu đầu vào khi thêm cấu hình.");
+      return res.status(400).json({ message: "Thiếu dữ liệu đầu vào." });
+    }
 
     let config = await Option.findOne();
     if (!config) config = new Option();
@@ -164,61 +165,75 @@ export const addConfigItem = async (req, res) => {
     // Kiểm tra type có hợp lệ hay không
     const validTypes = ["departments", "statuses", "programs"];
     if (!validTypes.includes(type)) {
+      logger.warn(`Loại cấu hình không hợp lệ: ${type}`);
       return res.status(400).json({ message: "Loại dữ liệu không hợp lệ." });
     }
 
     if (!config[type].includes(value)) {
       config[type].push(value);
       await config.save();
+      logger.info(`Thêm cấu hình thành công - Loại: ${type}, Giá trị: ${value}`);
       return res.json({ message: "Thêm thành công!", config });
     } else {
+      logger.warn(`Giá trị cấu hình đã tồn tại - Loại: ${type}, Giá trị: ${value}`);
       return res.status(400).json({ message: "Giá trị đã tồn tại." });
     }
   } catch (error) {
+    logger.error(`Lỗi khi thêm cấu hình: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi thêm mục mới." });
   }
 };
-
 
 // Xóa một mục khỏi danh sách
 export const deleteConfigItem = async (req, res) => {
   try {
     const { type, value } = req.body;
-    if (!type || !value) return res.status(400).json({ message: "Thiếu dữ liệu đầu vào." });
+    logger.info(`Nhận yêu cầu xóa cấu hình - Loại: ${type}, Giá trị: ${value}`);
+
+    if (!type || !value) {
+      logger.warn("Thiếu dữ liệu đầu vào khi xóa cấu hình.");
+      return res.status(400).json({ message: "Thiếu dữ liệu đầu vào." });
+    }
 
     let config = await Option.findOne();
-    if (!config) return res.status(404).json({ message: "Không tìm thấy cấu hình." });
+    if (!config) {
+      logger.warn("Không tìm thấy cấu hình để xóa.");
+      return res.status(404).json({ message: "Không tìm thấy cấu hình." });
+    }
 
     // Kiểm tra type có hợp lệ hay không
     const validTypes = ["departments", "statuses", "programs"];
     if (!validTypes.includes(type)) {
+      logger.warn(`Loại cấu hình không hợp lệ khi xóa: ${type}`);
       return res.status(400).json({ message: "Loại dữ liệu không hợp lệ." });
     }
 
     if (!config[type].includes(value)) {
+      logger.warn(`Không tìm thấy giá trị cấu hình để xóa - Loại: ${type}, Giá trị: ${value}`);
       return res.status(400).json({ message: "Không tìm thấy giá trị để xóa." });
     }
 
     config[type] = config[type].filter(item => item !== value);
     await config.save();
+    logger.info(`Xóa cấu hình thành công - Loại: ${type}, Giá trị: ${value}`);
     return res.json({ message: "Xóa thành công!", config });
   } catch (error) {
+    logger.error(`Lỗi khi xóa cấu hình: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi xóa mục." });
   }
 };
 
-
 // Hiển thị danh sách sinh viên từ MongoDB
 export const getStudentList = async (req, res) => {
   try {
-    const students = await Student.find().lean(); // Chuyển đổi thành object thuần túy
+    const students = await Student.find().lean();
+    logger.info(`Lấy danh sách sinh viên - Số lượng: ${students.length}`);
     res.render('list', { students });
   } catch (error) {
-    console.log(error);
+    logger.error(`Lỗi tải danh sách sinh viên: ${error.message}`);
     res.status(500).send('Lỗi khi tải danh sách sinh viên');
   }
 };
-
 
 // Hiển thị trang thêm sinh viên
 export const getAddStudent = (req, res) => {
@@ -251,7 +266,6 @@ export const postAddStudent = async (req, res) => {
   }
 };
 
-
 // Tìm kiếm sinh viên theo MSSV hoặc Họ tên
 export const getSearchStudent = async (req, res) => {
   try {
@@ -279,13 +293,19 @@ export const getSearchStudent = async (req, res) => {
     res.status(500).send("Lỗi khi tìm kiếm sinh viên");
   }
 };
+
 // Xóa sinh viên theo ID
 export const deleteStudent = async (req, res) => {
   try {
     const student = await Student.findByIdAndDelete(req.params.id);
-    if (!student) return res.status(404).json({ message: "Không tìm thấy sinh viên." });
+    if (!student) {
+      logger.warn(`Xóa sinh viên thất bại - ID không tồn tại: ${req.params.id}`);
+      return res.status(404).json({ message: "Không tìm thấy sinh viên." });
+    }
+    logger.info(`Xóa sinh viên thành công - ID: ${req.params.id}`);
     res.json({ message: "Xóa sinh viên thành công!" });
   } catch (error) {
+    logger.error(`Lỗi khi xóa sinh viên: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi xóa sinh viên." });
   }
 };
@@ -293,15 +313,19 @@ export const deleteStudent = async (req, res) => {
 // Cập nhật thông tin sinh viên
 export const updateStudent = async (req, res) => {
   try {
-    console.log("Nhận yêu cầu cập nhật ID:", req.params.id);
-    console.log("Dữ liệu nhận được từ frontend:", req.body); // Log dữ liệu nhận từ client
+    logger.info(`Nhận yêu cầu cập nhật sinh viên - ID: ${req.params.id}`);
+    logger.info(`Dữ liệu từ frontend: ${JSON.stringify(req.body)}`);
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      logger.warn(`ID không hợp lệ: ${req.params.id}`);
       return res.status(400).json({ message: "ID không hợp lệ!" });
     }
 
     const student = await Student.findById(req.params.id);
-    if (!student) return res.status(404).json({ message: "Không tìm thấy sinh viên." });
+    if (!student) {
+      logger.warn(`Không tìm thấy sinh viên - ID: ${req.params.id}`);
+      return res.status(404).json({ message: "Không tìm thấy sinh viên." });
+    }
 
     // Kiểm tra nếu dữ liệu trống thì không cập nhật
     let hasUpdate = false;
@@ -313,18 +337,20 @@ export const updateStudent = async (req, res) => {
     });
 
     if (!hasUpdate) {
+      logger.warn(`Không có dữ liệu mới để cập nhật - ID: ${req.params.id}`);
       return res.status(400).json({ message: "Không có dữ liệu mới để cập nhật." });
     }
 
     await student.save();
-    console.log("Cập nhật thành công:", student); // Log sau khi cập nhật
+    logger.info(`Cập nhật thành công - ID: ${req.params.id}, Dữ liệu mới: ${JSON.stringify(student)}`);
 
     res.json({ message: "Cập nhật thông tin thành công!", student });
   } catch (error) {
-    console.error("Lỗi khi cập nhật:", error);
+    logger.error(`Lỗi khi cập nhật sinh viên - ID: ${req.params.id}, Lỗi: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi cập nhật thông tin." });
   }
 };
+
 
 export const getStudentById = async (req, res) => {
   try {
@@ -357,11 +383,10 @@ export const getStudentsByDepartment = async (req, res) => {
 export const getDepartments = async (req, res) => {
   try {
     const config = await Option.findOne();
-    if (!config || !config.departments) {
-      return res.json([]);
-    }
-    res.json(config.departments);
+    logger.info("Lấy danh sách khoa");
+    res.json(config?.departments || []);
   } catch (error) {
+    logger.error(`Lỗi tải danh sách khoa: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi tải danh sách khoa." });
   }
 };

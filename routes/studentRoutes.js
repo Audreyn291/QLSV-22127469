@@ -3,9 +3,10 @@ import { getStudentById, deleteStudent, updateStudent } from '../controllers/stu
 import { getConfig, addConfigItem, deleteConfigItem } from '../controllers/studentController.js';
 import { exportJSON, exportExcel, importData } from '../controllers/studentController.js';
 import express from 'express';
-const router = express.Router();
 import multer from 'multer';
+import logger from '../utils/logger.js';
 
+const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 router.get('/', getHome);
@@ -29,6 +30,11 @@ router.get('/api/students-by-department', getStudentsByDepartment);  // Tìm sin
 router.get('/api/export/json', exportJSON);    // Xuất JSON
 router.get('/api/export/excel', exportExcel); // Xuất Excel
 router.post('/api/import', upload.single('file'), importData); // Nhập dữ liệu từ CSV/Excel
+
+router.use((req, res, next) => {
+    logger.info(`[${req.method}] ${req.originalUrl}`);
+    next();
+});
 
 
 export default router;
