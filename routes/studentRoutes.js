@@ -1,8 +1,12 @@
-import express from 'express';
-const router = express.Router();
 import { getHome, getAddStudent, getStudentList, getSearchStudent, postAddStudent, getStudentsByDepartment, getDepartments } from '../controllers/studentController.js';
 import { getStudentById, deleteStudent, updateStudent } from '../controllers/studentController.js';
 import { getConfig, addConfigItem, deleteConfigItem } from '../controllers/studentController.js';
+import { exportJSON, exportExcel, importData } from '../controllers/studentController.js';
+import express from 'express';
+const router = express.Router();
+import multer from 'multer';
+
+const upload = multer({ dest: 'uploads/' });
 
 router.get('/', getHome);
 router.get('/add', getAddStudent);
@@ -21,6 +25,10 @@ router.delete('/config', deleteConfigItem);
 
 router.get('/api/departments', getDepartments);  // Lấy danh sách khoa
 router.get('/api/students-by-department', getStudentsByDepartment);  // Tìm sinh viên theo khoa
+
+router.get('/api/export/json', exportJSON);    // Xuất JSON
+router.get('/api/export/excel', exportExcel); // Xuất Excel
+router.post('/api/import', upload.single('file'), importData); // Nhập dữ liệu từ CSV/Excel
 
 
 export default router;

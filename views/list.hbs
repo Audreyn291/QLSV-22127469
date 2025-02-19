@@ -1,24 +1,18 @@
 <div class="bg-white p-7 rounded-lg shadow-md text-center">
     <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Danh sách sinh viên</h1>
-
-    <!-- Nút Import & Export -->
-    <div class="flex justify-between items-center mb-4">
-        <!-- Nút Nhập CSV/Excel -->
-        <div>
-            <input type="file" id="import-file" accept=".csv,.xlsx" class="hidden" />
-            <label for="import-file" class="bg-[#D3C0F9] text-black px-4 py-2 rounded-lg cursor-pointer">
-                Nhập CSV/Excel
-            </label>
+    <div class="flex justify-between items-center mt-4 mb-2">
+        <!-- Xuất dữ liệu (nằm bên trái, ngang hàng) -->
+        <div class="flex gap-2">
+            <a href="/api/export/json" class="bg-[#B5DDD1] text-black px-4 py-2 rounded">Xuất JSON</a>
+            <a href="/api/export/excel" class="bg-[#B5DDD1] text-black px-4 py-2 rounded">Xuất Excel</a>
         </div>
-        <!-- Nút Xuất CSV/Excel -->
-        <div class="flex gap-4">
-            <button id="export-csv-btn" class="bg-[#B5DDD1] text-black px-4 py-2 rounded-lg">
-                Xuất CSV
-            </button>
 
-            <button id="export-excel-btn" class="bg-[#D7E7A9] text-black px-4 py-2 rounded-lg">
-                Xuất Excel
-            </button>
+        <!-- Nhập dữ liệu (nằm bên phải) -->
+        <div>
+            <form id="import-form" enctype="multipart/form-data" class="flex gap-2">
+                <input type="file" id="import-file" name="file" accept=".csv, .xlsx" class="border rounded px-4 py-2">
+                <button type="submit" class="bg-[#D7E7A9] text-black px-4 py-2 rounded">Nhập dữ liệu</button>
+            </form>
         </div>
     </div>
 
@@ -72,107 +66,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
 <script>
-
-    // Xuất CSV
-    document.getElementById("export-csv-btn").addEventListener("click", function () {
-        fetch('/list')
-            .then(response => response.json())
-            .then(students => {
-                if (students.length === 0) {
-                    alert("Không có dữ liệu để xuất!");
-                    return;
-                }
-
-                let csvContent = "MSSV,Họ và tên,Ngày sinh,Giới tính,Khoa,Khóa,Chương trình,Địa chỉ,Email,Số điện thoại,Tình trạng\n";
-
-                students.forEach(student => {
-                    let row = [
-                        student.mssv, student.họVàTên, student.ngàySinh, student.giớiTính,
-                        student.khoa, student.khóa, student.chươngTrình, student.địaChỉ,
-                        student.email, student.sốĐiệnThoại, student.tìnhTrạng
-                    ].map(field => `"${field}"`).join(",");
-
-                    csvContent += row + "\n";
-                });
-
-                const BOM = "\uFEFF"; // Byte Order Mark
-                const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
-
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = "danh_sach_sinh_vien.csv";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            })
-            .catch(error => console.log("Lỗi tải dữ liệu CSV:", error));
-    });
-
-    // Xuất Excel
-    document.getElementById("export-excel-btn").addEventListener("click", function () {
-        fetch('/list')
-            .then(response => response.json())
-            .then(students => {
-                if (students.length === 0) {
-                    alert("Không có dữ liệu để xuất!");
-                    return;
-                }
-
-                const header = [
-                    "MSSV", "Họ và tên", "Ngày sinh", "Giới tính", "Khoa", "Khóa",
-                    "Chương trình", "Địa chỉ", "Email", "Số điện thoại", "Tình trạng"
-                ];
-
-                const data = students.map(student => [
-                    student.mssv, student.họVàTên, student.ngàySinh, student.giớiTính,
-                    student.khoa, student.khóa, student.chươngTrình, student.địaChỉ,
-                    student.email, student.sốĐiệnThoại, student.tìnhTrạng
-                ]);
-
-                const ws = XLSX.utils.aoa_to_sheet([header, ...data]);
-                ws['!cols'] = header.map(() => ({ wch: 20 }));
-
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Danh sách sinh viên");
-
-                XLSX.writeFile(wb, "danh_sach_sinh_vien.xlsx");
-            })
-            .catch(error => console.log("Lỗi tải dữ liệu Excel:", error));
-    });
-
-    // Import CSV/Excel
-    document.getElementById("import-file").addEventListener("change", function (event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: "array" });
-
-            const sheetName = workbook.SheetNames[0];
-            const sheet = workbook.Sheets[sheetName];
-
-            const students = XLSX.utils.sheet_to_json(sheet);
-
-            fetch('/import', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(students)
-            })
-                .then(response => response.json())
-                .then(result => {
-                    alert(result.message);
-                    location.reload();
-                })
-                .catch(error => console.log("Lỗi nhập dữ liệu:", error));
-        };
-
-        reader.readAsArrayBuffer(file);
-    });
-
     const khoaOptions = ["Khoa Luật", "Khoa Tiếng Anh thương mại", "Khoa Tiếng Nhật", "Khoa Tiếng Pháp"];
     const tinhTrangOptions = ["Đang học", "Đã tốt nghiệp", "Đã thôi học", "Tạm dừng học"];
 
@@ -345,11 +238,6 @@
         }
     }
 
-
-
-
-
-
     function deleteStudent(studentId) {
         if (!studentId) {
             alert("Lỗi: ID sinh viên không hợp lệ!");
@@ -386,5 +274,21 @@
     }
 
     document.addEventListener("DOMContentLoaded", fetchConfig);
+
+    document.getElementById("import-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("file", document.getElementById("import-file").files[0]);
+
+        const response = await fetch("/api/import", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        location.reload();
+    });
 
 </script>

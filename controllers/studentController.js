@@ -1,10 +1,141 @@
 import { Student } from '../Database/dbstudents.js';
 import Option from '../models/optionsModel.js';
 import mongoose from 'mongoose';
+import fs from 'fs';
+import { parse } from 'json2csv';
+import ExcelJS from 'exceljs';
+import multer from 'multer';
+
 
 // Trang chủ
 export const getHome = (req, res) => {
   res.render('home');
+};
+
+// Thiết lập multer để upload file
+const upload = multer({ dest: 'uploads/' });
+
+// Xuất dữ liệu ra JSON
+export const exportJSON = async (req, res) => {
+  try {
+    const students = await Student.find().lean();
+
+    if (students.length === 0) {
+      return res.status(400).json({ message: "Không có dữ liệu để xuất." });
+    }
+
+    res.setHeader('Content-Disposition', 'attachment; filename=sinhvien.json');
+    res.setHeader('Content-Type', 'application/json');
+    res.json(students);
+  } catch (error) {
+    console.error("Lỗi xuất JSON:", error);
+    res.status(500).send("Lỗi khi xuất JSON.");
+  }
+};
+
+// Xuất dữ liệu ra Excel
+export const exportExcel = async (req, res) => {
+  try {
+    const students = await Student.find().lean();
+
+    if (students.length === 0) {
+      return res.status(400).json({ message: "Không có dữ liệu để xuất." });
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Danh sách sinh viên");
+
+    worksheet.columns = [
+      { header: "MSSV", key: "mssv", width: 15 },
+      { header: "Họ và Tên", key: "họVàTên", width: 20 },
+      { header: "Ngày sinh", key: "ngàySinh", width: 15 },
+      { header: "Giới tính", key: "giớiTính", width: 10 },
+      { header: "Khoa", key: "khoa", width: 20 },
+      { header: "Khóa", key: "khóa", width: 10 },
+      { header: "Chương trình", key: "chươngTrình", width: 20 },
+      { header: "Địa chỉ", key: "địaChỉ", width: 30 },
+      { header: "Email", key: "email", width: 25 },
+      { header: "Số điện thoại", key: "sốĐiệnThoại", width: 15 },
+      { header: "Tình trạng", key: "tìnhTrạng", width: 15 }
+    ];
+
+    worksheet.addRows(students);
+
+    res.setHeader('Content-Disposition', 'attachment; filename=sinhvien.xlsx');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (error) {
+    console.error("Lỗi xuất Excel:", error);
+    res.status(500).send("Lỗi khi xuất Excel.");
+  }
+};
+
+// Import dữ liệu từ JSON hoặc Excel
+export const importData = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "Vui lòng chọn file để tải lên." });
+    }
+
+    const filePath = req.file.path;
+    const students = [];
+
+    if (req.file.mimetype === 'application/json') {
+      // Xử lý file JSON
+      try {
+        const jsonData = fs.readFileSync(filePath, 'utf-8');
+        const parsedData = JSON.parse(jsonData);
+        students.push(...parsedData);
+      } catch (error) {
+        console.error("Lỗi đọc file JSON:", error);
+        return res.status(400).json({ message: "File JSON không hợp lệ." });
+      }
+    } else if (
+      req.file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
+      req.file.mimetype === 'application/vnd.ms-excel'
+    ) {
+      // Xử lý file Excel
+      try {
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.readFile(filePath);
+        const worksheet = workbook.getWorksheet(1);
+
+        worksheet.eachRow((row, rowNumber) => {
+          if (rowNumber > 1) { // Bỏ qua tiêu đề
+            students.push({
+              mssv: row.getCell(1).value,
+              họVàTên: row.getCell(2).value,
+              ngàySinh: row.getCell(3).value,
+              giớiTính: row.getCell(4).value,
+              khoa: row.getCell(5).value,
+              khóa: row.getCell(6).value,
+              chươngTrình: row.getCell(7).value,
+              địaChỉ: row.getCell(8).value,
+              email: row.getCell(9).value,
+              sốĐiệnThoại: row.getCell(10).value,
+              tìnhTrạng: row.getCell(11).value
+            });
+          }
+        });
+      } catch (error) {
+        console.error("Lỗi đọc file Excel:", error);
+        return res.status(400).json({ message: "File Excel không hợp lệ." });
+      }
+    } else {
+      return res.status(400).json({ message: "Chỉ hỗ trợ file JSON hoặc Excel." });
+    }
+
+    // Lưu vào database
+    await Student.insertMany(students);
+    fs.unlinkSync(filePath); // Xóa file sau khi xử lý xong
+
+    res.json({ message: "Import dữ liệu thành công!", students });
+  } catch (error) {
+    console.error("Lỗi import dữ liệu:", error);
+    res.status(500).json({ message: "Lỗi khi import dữ liệu." });
+  }
 };
 
 // Lấy danh sách khoa, tình trạng sinh viên, chương trình đào tạo
