@@ -17,3 +17,21 @@
 2025-02-19 21:33:52 [INFO]: [GET] /favicon.ico
 2025-02-19 21:34:06 [INFO]: Lấy danh sách khoa
 2025-02-19 21:34:10 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-21 16:29:16 [INFO]: Truy cập trang chủ
+2025-02-21 16:29:17 [INFO]: [GET] /api/version
+2025-02-21 16:29:17 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-21 16:29:17 [INFO]: [GET] /favicon.ico
+2025-02-21 16:42:46 [INFO]: [GET] /favicon.ico
+2025-02-21 16:47:47 [INFO]: Nhận yêu cầu thêm cấu hình - Loại: departments, Giá trị: Khoa Tiếng Hàn
+2025-02-21 16:47:47 [INFO]: Thêm cấu hình thành công - Loại: departments, Giá trị: Khoa Tiếng Hàn
+2025-02-21 16:48:28 [INFO]: Nhận yêu cầu xóa cấu hình - Loại: departments, Giá trị: Khoa Tiếng Hàn
+2025-02-21 16:48:28 [INFO]: Xóa cấu hình thành công - Loại: departments, Giá trị: Khoa Tiếng Hàn
+2025-02-21 16:53:06 [INFO]: Lấy danh sách khoa
+2025-02-21 16:55:41 [INFO]: Lấy danh sách khoa
+2025-02-21 17:01:53 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-21 17:03:07 [INFO]: Xuất JSON thành công - 11 sinh viên.
+2025-02-21 17:03:12 [INFO]: Xuất Excel thành công - 11 sinh viên.
+2025-02-21 17:05:16 [INFO]: Xuất JSON thành công - 11 sinh viên.
+2025-02-21 17:14:51 [INFO]: Truy cập trang chủ
+2025-02-21 17:14:51 [INFO]: [GET] /api/version
+2025-02-21 17:14:51 [INFO]: Lấy thông tin phiên bản ứng dụng.
