@@ -1,6 +1,6 @@
 import { getHome, getAddStudent, getStudentList, getSearchStudent, postAddStudent, getStudentsByDepartment, getDepartments } from '../controllers/studentController.js';
 import { getStudentById, deleteStudent, updateStudent } from '../controllers/studentController.js';
-import { getConfig, addConfigItem, deleteConfigItem } from '../controllers/studentController.js';
+import { getConfig, addConfigItem, deleteConfigItem, renameConfigItem } from '../controllers/studentController.js';
 import { exportJSON, exportExcel, importData } from '../controllers/studentController.js';
 import { getAppInfo } from '../controllers/studentController.js';
 import express from 'express';
@@ -24,6 +24,7 @@ router.delete('/students/:id', deleteStudent);  // Định tuyến xóa sinh vi�
 router.get('/config', getConfig);
 router.post('/config', addConfigItem);
 router.delete('/config', deleteConfigItem);
+router.put('/config/rename', renameConfigItem);
 
 router.get('/api/departments', getDepartments);  // Lấy danh sách khoa
 router.get('/api/students-by-department', getStudentsByDepartment);  // Tìm sinh viên theo khoa

@@ -33,6 +33,8 @@
                 class="mt-2 bg-[#D7E7A9] text-black px-3 py-1 rounded">Thêm Khoa</button>
             <button onclick="deleteConfigItem('departments')" type="button"
                 class="mt-2 bg-[#B5DDD1] text-black px-3 py-1 rounded">Xóa Khoa</button>
+            <button onclick="renameConfigItem('departments')" type="button"
+                class="mt-2 bg-[#FFDAC1] text-black px-3 py-1 rounded">Đổi tên Khoa</button>
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Khóa</label>
@@ -47,6 +49,8 @@
                 class="mt-2 bg-[#D7E7A9] text-black px-3 py-1 rounded">Thêm Chương trình</button>
             <button onclick="deleteConfigItem('programs')" type="button"
                 class="mt-2 bg-[#B5DDD1] text-black px-3 py-1 rounded">Xóa Chương trình</button>
+            <button onclick="renameConfigItem('programs')" type="button"
+                class="mt-2 bg-[#FFDAC1]  text-black px-3 py-1 rounded">Đổi tên Chương trình</button>
         </div>
         <div>
             <label class="block text-lg font-medium text-gray-700">Địa chỉ</label>
@@ -71,6 +75,8 @@
                 class="mt-2 bg-[#D7E7A9] text-black px-3 py-1 rounded">Thêm Tình trạng</button>
             <button onclick="deleteConfigItem('statuses')" type="button"
                 class="mt-2 bg-[#B5DDD1] text-black px-3 py-1 rounded">Xóa Tình trạng</button>
+            <button onclick="renameConfigItem('statuses')" type="button"
+                class="mt-2 bg-[#FFDAC1]  text-black px-3 py-1 rounded">Đổi tên Tình trạng</button>
         </div>
         <div class="col-span-2 text-center">
             <button type="submit"
@@ -166,4 +172,26 @@
 
     document.addEventListener("DOMContentLoaded", fetchConfig);
 
+    async function renameConfigItem(type) {
+        const selectElement = document.getElementById(type === 'departments' ? 'khoaSelect' : type === 'statuses' ? 'tinhTrangSelect' : 'chuongTrinhSelect');
+        const oldValue = selectElement.value;
+
+        if (!oldValue) {
+            alert("Vui lòng chọn một mục cần đổi tên.");
+            return;
+        }
+
+        const newValue = prompt(`Nhập tên mới cho ${oldValue}:`);
+        if (!newValue || newValue.trim() === oldValue) return;
+
+        const response = await fetch('/config/rename', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, oldValue, newValue })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        fetchConfig();
+    }
 </script>

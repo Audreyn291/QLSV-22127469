@@ -250,6 +250,48 @@ export const deleteConfigItem = async (req, res) => {
   }
 };
 
+// Đổi tên một mục trong danh sách cấu hình
+export const renameConfigItem = async (req, res) => {
+  try {
+    const { type, oldValue, newValue } = req.body;
+    logger.info(`Nhận yêu cầu đổi tên cấu hình - Loại: ${type}, Từ: ${oldValue}, Thành: ${newValue}`);
+
+    if (!type || !oldValue || !newValue) {
+      logger.warn("Thiếu dữ liệu đầu vào khi đổi tên cấu hình.");
+      return res.status(400).json({ message: "Thiếu dữ liệu đầu vào." });
+    }
+
+    let config = await Option.findOne();
+    if (!config) {
+      logger.warn("Không tìm thấy cấu hình.");
+      return res.status(404).json({ message: "Không tìm thấy cấu hình." });
+    }
+
+    // Kiểm tra loại dữ liệu hợp lệ
+    const validTypes = ["departments", "statuses", "programs"];
+    if (!validTypes.includes(type)) {
+      logger.warn(`Loại cấu hình không hợp lệ: ${type}`);
+      return res.status(400).json({ message: "Loại dữ liệu không hợp lệ." });
+    }
+
+    const index = config[type].indexOf(oldValue);
+    if (index === -1) {
+      logger.warn(`Không tìm thấy giá trị cần đổi tên - Loại: ${type}, Giá trị: ${oldValue}`);
+      return res.status(400).json({ message: "Không tìm thấy giá trị cần đổi tên." });
+    }
+
+    // Cập nhật giá trị
+    config[type][index] = newValue;
+    await config.save();
+    logger.info(`Đổi tên cấu hình thành công - Loại: ${type}, Từ: ${oldValue}, Thành: ${newValue}`);
+
+    return res.json({ message: "Đổi tên thành công!", config });
+  } catch (error) {
+    logger.error(`Lỗi khi đổi tên cấu hình: ${error.message}`);
+    res.status(500).json({ message: "Lỗi khi đổi tên mục." });
+  }
+};
+
 // Hiển thị danh sách sinh viên từ MongoDB
 export const getStudentList = async (req, res) => {
   try {
