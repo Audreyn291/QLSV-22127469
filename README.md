@@ -77,13 +77,17 @@ http://localhost:3000
 ![Lưu trữ dữ liệu](/screenshots/25.png)
 
 ### b. Cho phép đổi tên & thêm mới
-- Bổ sung thêm chức năng thêm/xóa Khoa/Chương trình/Tình trạng của sinh viên: 
-![Giao diên mới](/screenshots/12.png)
+- Bổ sung thêm chức năng thêm/xóa/sửa cột **Khoa**/**Chương trình**/**Tình trạng** của sinh viên: 
+![Giao diên mới](/screenshots/28.png)
 + Nhấn nút **"Thêm Khoa"** và nhập tên khoa muốn thêm vào.
 ![Chức năng thêm Khoa](/screenshots/13.png)
 ![Thêm Khoa thành công](/screenshots/14.png)
 + Nhấn chọn khoa và nhấn nút **"Xóa Khoa"** để xóa. 
 ![Chức năng xóa Khoa](/screenshots/15.png)
++ Nhấn chọn khoa và nhấn nút **"Đổi tên Khoa"** để đổi tên.
+![Chức năng đổi tên Khoa](/screenshots/29.png)
+![Đổi tên Khoa thành công](/screenshots/30.png)
+- Tương tự thêm/xóa/sửa với **Chương trình** và **Tình trạng** sinh viên
 
 ### c. Thêm chức năng tìm kiếm
 - Bổ sung thêm chức năng tìm kiếm theo khoa và theo khoa kèm MSSV/Họ và tên của sinh viên.
