@@ -35,3 +35,24 @@
 2025-02-21 17:14:51 [INFO]: Truy cập trang chủ
 2025-02-21 17:14:51 [INFO]: [GET] /api/version
 2025-02-21 17:14:51 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-21 19:30:57 [INFO]: Truy cập trang chủ
+2025-02-21 19:30:57 [INFO]: [GET] /api/version
+2025-02-21 19:30:57 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-21 19:30:57 [INFO]: [GET] /favicon.ico
+2025-02-21 19:31:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-21 19:31:03 [INFO]: Lấy danh sách khoa
+2025-02-21 19:32:23 [INFO]: [GET] /favicon.ico
+2025-02-21 19:32:46 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-21 19:32:52 [INFO]: Lấy danh sách khoa
+2025-02-21 19:37:44 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-21 19:37:54 [INFO]: Nhận yêu cầu xóa cấu hình - Loại: departments, Giá trị: Khoa Luật
+2025-02-21 19:37:54 [INFO]: Xóa cấu hình thành công - Loại: departments, Giá trị: Khoa Luật
+2025-02-21 19:38:24 [INFO]: Nhận yêu cầu thêm cấu hình - Loại: departments, Giá trị: Khoa Luật
+2025-02-21 19:38:24 [INFO]: Thêm cấu hình thành công - Loại: departments, Giá trị: Khoa Luật
+2025-02-21 19:39:00 [INFO]: Nhận yêu cầu đổi tên cấu hình - Loại: departments, Từ: Khoa Luật, Thành: Khoa Luật Quóc Tế
+2025-02-21 19:39:00 [INFO]: Đổi tên cấu hình thành công - Loại: departments, Từ: Khoa Luật, Thành: Khoa Luật Quóc Tế
+2025-02-21 19:39:20 [INFO]: Nhận yêu cầu đổi tên cấu hình - Loại: departments, Từ: Khoa Luật Quóc Tế, Thành: Khoa Luật Quốc Tế
+2025-02-21 19:39:20 [INFO]: Đổi tên cấu hình thành công - Loại: departments, Từ: Khoa Luật Quóc Tế, Thành: Khoa Luật Quốc Tế
+2025-02-21 19:45:50 [INFO]: Lấy danh sách khoa
+2025-02-21 19:46:07 [INFO]: Lấy danh sách khoa
+2025-02-21 19:47:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
