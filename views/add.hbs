@@ -88,6 +88,24 @@
 </div>
 
 <script>
+    document.getElementById("add-student-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const emailInput = document.querySelector("input[name='email']");
+        const email = emailInput.value.trim();
+
+        // Lấy danh sách domain hợp lệ từ API
+        const response = await fetch('/config/email-domains');
+        const allowedDomains = await response.json();
+
+        const emailDomain = email.split('@').pop();
+        if (!allowedDomains.includes(emailDomain)) {
+            alert(`Email phải thuộc các tên miền: ${allowedDomains.join(", ")}`);
+            return;
+        }
+
+        this.submit();
+    });
+
     document.getElementById("add-student-form").addEventListener("submit", function (event) {
         const emailInput = document.querySelector("input[name='email']");
         const phoneInput = document.querySelector("input[name='sốĐiệnThoại']");

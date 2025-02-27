@@ -14,6 +14,95 @@ export const getHome = (req, res) => {
   res.render('home');
 };
 
+//EX3
+export const getEmailDomains = async (req, res) => {
+  try {
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+    res.json(config.emailDomains || []);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi lấy danh sách tên miền email." });
+  }
+};
+
+export const addEmailDomain = async (req, res) => {
+  try {
+    const { domain } = req.body;
+    if (!domain) return res.status(400).json({ message: "Tên miền không hợp lệ!" });
+
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+
+    if (!config.emailDomains.includes(domain)) {
+      config.emailDomains.push(domain);
+      await config.save();
+    }
+
+    res.json({ message: "Đã thêm tên miền!", emailDomains: config.emailDomains });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi thêm tên miền email!" });
+  }
+};
+
+export const deleteEmailDomain = async (req, res) => {
+  try {
+    const { domain } = req.params;
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+
+    config.emailDomains = config.emailDomains.filter(d => d !== domain);
+    await config.save();
+
+    res.json({ message: "Đã xóa tên miền!", emailDomains: config.emailDomains });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi xóa tên miền email!" });
+  }
+};
+
+export const getPhoneCountryCodes = async (req, res) => {
+  try {
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+    res.json(config.phoneCountryCodes || []);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi lấy danh sách mã quốc gia!" });
+  }
+};
+
+export const addPhoneCountryCode = async (req, res) => {
+  try {
+    const { code } = req.body;
+    if (!code || !code.startsWith('+')) return res.status(400).json({ message: "Mã quốc gia không hợp lệ!" });
+
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+
+    if (!config.phoneCountryCodes.includes(code)) {
+      config.phoneCountryCodes.push(code);
+      await config.save();
+    }
+
+    res.json({ message: "Đã thêm mã quốc gia!", phoneCountryCodes: config.phoneCountryCodes });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi thêm mã quốc gia!" });
+  }
+};
+
+export const deletePhoneCountryCode = async (req, res) => {
+  try {
+    const { code } = req.params;
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+
+    config.phoneCountryCodes = config.phoneCountryCodes.filter(c => c !== code);
+    await config.save();
+
+    res.json({ message: "Đã xóa mã quốc gia!", phoneCountryCodes: config.phoneCountryCodes });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi xóa mã quốc gia!" });
+  }
+};
+
 // Lấy đường dẫn hiện tại
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -312,11 +401,24 @@ export const getAddStudent = (req, res) => {
 // Xử lý thêm sinh viên mới vào MongoDB
 export const postAddStudent = async (req, res) => {
   try {
-    const { khoa } = req.body;
+    const { email, khoa, sốĐiệnThoại } = req.body;
     let config = await Option.findOne();
+    const allowedDomains = config?.emailDomains || [];
+    const allowedPhoneCodes = config?.phoneCountryCodes || [];
 
     if (!config) {
       config = new Option();
+    }
+
+    // Kiểm tra email có đúng domain không
+    const emailDomain = email.split('@').pop();
+    if (!allowedDomains.includes(emailDomain)) {
+      return res.render('add', { error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` });
+    }
+
+    // Kiểm tra số điện thoại có đúng mã quốc gia không
+    if (!allowedPhoneCodes.some(code => sốĐiệnThoại.startsWith(code))) {
+      return res.render('add', { error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` });
     }
 
     // Nếu khoa chưa tồn tại, thêm vào danh sách

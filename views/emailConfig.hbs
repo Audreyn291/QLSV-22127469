@@ -1,0 +1,86 @@
+<div class="bg-white p-7 rounded-lg shadow-md">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Quản lý Tên Miền Email</h1>
+    
+    <!-- Form thêm tên miền email -->
+    <div class="mb-4">
+        <label class="block text-lg font-medium text-gray-700">Thêm Tên Miền Email</label>
+        <input type="text" id="newEmailDomain" placeholder="Nhập tên miền (ví dụ: student.edu.vn)"
+            class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+        <button onclick="addEmailDomain()" 
+            class="mt-2 bg-[#FEA6B6] text-white px-4 py-2 rounded hover:bg-[#FFC2D1]">
+            Thêm
+        </button>
+    </div>
+
+    <!-- Danh sách tên miền email -->
+    <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-2">Danh sách Tên Miền Được Phép</h2>
+    <ul id="emailDomainList" class="border border-gray-300 rounded-lg p-4">
+        <!-- Các tên miền sẽ được hiển thị tại đây -->
+    </ul>
+</div>
+
+<script>
+    // Lấy danh sách tên miền từ server
+    async function fetchEmailDomains() {
+        const response = await fetch('/config/email-domains');
+        const domains = await response.json();
+        const listElement = document.getElementById('emailDomainList');
+        listElement.innerHTML = '';
+
+        if (domains.length === 0) {
+            listElement.innerHTML = '<p class="text-gray-500">Chưa có tên miền nào.</p>';
+            return;
+        }
+
+        domains.forEach(domain => {
+            const li = document.createElement('li');
+            li.className = "flex justify-between p-2 border-b";
+            li.innerHTML = `
+                <span>${domain}</span>
+                <button onclick="deleteEmailDomain('${domain}')" 
+                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                    Xóa
+                </button>
+            `;
+            listElement.appendChild(li);
+        });
+    }
+
+    // Thêm tên miền mới
+    async function addEmailDomain() {
+        const domain = document.getElementById('newEmailDomain').value.trim();
+        if (!domain) {
+            alert('Vui lòng nhập tên miền hợp lệ!');
+            return;
+        }
+
+        const response = await fetch('/config/email-domains', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ domain })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        fetchEmailDomains();
+        document.getElementById('newEmailDomain').value = '';
+    }
+
+    // Xóa tên miền
+    async function deleteEmailDomain(domain) {
+        if (!confirm(`Bạn có chắc chắn muốn xóa tên miền ${domain}?`)) return;
+
+        const response = await fetch('/config/email-domains', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ domain })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        fetchEmailDomains();
+    }
+
+    // Gọi hàm fetch khi trang load
+    document.addEventListener("DOMContentLoaded", fetchEmailDomains);
+</script>

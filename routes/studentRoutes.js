@@ -2,6 +2,7 @@ import { getHome, getAddStudent, getStudentList, getSearchStudent, postAddStuden
 import { getStudentById, deleteStudent, updateStudent } from '../controllers/studentController.js';
 import { getConfig, addConfigItem, deleteConfigItem, renameConfigItem } from '../controllers/studentController.js';
 import { exportJSON, exportExcel, importData } from '../controllers/studentController.js';
+import { getEmailDomains, addEmailDomain, deleteEmailDomain } from '../controllers/studentController.js';
 import { getAppInfo } from '../controllers/studentController.js';
 import express from 'express';
 import multer from 'multer';
@@ -37,6 +38,15 @@ router.use((req, res, next) => {
     logger.info(`[${req.method}] ${req.originalUrl}`);
     next();
 });
+
+router.get('/config/email-domains', getEmailDomains);
+router.post('/config/email-domains', addEmailDomain);
+router.delete('/config/email-domains/:domain', deleteEmailDomain);
+
+router.get('/email-config', (req, res) => {
+    res.render('emailConfig');
+});
+
 
 router.get('/api/version', getAppInfo);  // Lấy thông tin phiên bản
 
