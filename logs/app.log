@@ -56,3 +56,10 @@
 2025-02-21 19:45:50 [INFO]: Lấy danh sách khoa
 2025-02-21 19:46:07 [INFO]: Lấy danh sách khoa
 2025-02-21 19:47:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-26 15:17:08 [INFO]: Truy cập trang chủ
+2025-02-26 15:17:09 [INFO]: [GET] /api/version
+2025-02-26 15:17:09 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-26 15:17:09 [INFO]: [GET] /favicon.ico
+2025-02-26 15:17:16 [INFO]: Lấy danh sách khoa
+2025-02-26 15:17:18 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-26 15:17:26 [INFO]: Lấy danh sách khoa
