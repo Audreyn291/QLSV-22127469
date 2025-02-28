@@ -444,27 +444,49 @@ export const getAddStudent = (req, res) => {
   res.render('add');
 };
 
-// Xử lý thêm sinh viên mới vào MongoDB
+// Xử lý thêm sinh viên mới vào MongoDB 
 export const postAddStudent = async (req, res) => {
   try {
-    const { email, khoa, sốĐiệnThoại } = req.body;
-    let config = await Option.findOne();
-    const allowedDomains = config?.emailDomains || [];
-    const allowedPhoneCodes = config?.phoneCountryCodes || [];
+    const { email, khoa, sốĐiệnThoại, mssv, họVàTên } = req.body;
 
+    // Xác định request có phải từ API không
+    const isApiRequest = req.headers['accept'] && req.headers['accept'].includes('application/json');
+
+    // Kiểm tra các trường bắt buộc
+    if (!email || !sốĐiệnThoại || !mssv || !họVàTên) {
+      return res.status(400).json({ error: "Thiếu thông tin bắt buộc: email, sốĐiệnThoại, mssv, họVàTên" });
+    }
+
+    // Kiểm tra MSSV đã tồn tại hay chưa
+    const existingStudent = await Student.findOne({ mssv });
+    if (existingStudent) {
+      console.log("MSSV đã tồn tại:", mssv);  // Debug log
+      return res.status(400).json({ error: "MSSV đã tồn tại, vui lòng chọn MSSV khác" });
+    }
+
+    // Lấy config từ database
+    let config = await Option.findOne();
     if (!config) {
       config = new Option();
+      await config.save();
     }
+
+    const allowedDomains = config.emailDomains || [];
+    const allowedPhoneCodes = config.phoneCountryCodes || [];
 
     // Kiểm tra email có đúng domain không
     const emailDomain = email.split('@').pop();
     if (!allowedDomains.includes(emailDomain)) {
-      return res.render('add', { error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` });
+      return isApiRequest
+        ? res.status(400).json({ error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` })
+        : res.render('add', { error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` });
     }
 
     // Kiểm tra số điện thoại có đúng mã quốc gia không
     if (!allowedPhoneCodes.some(code => sốĐiệnThoại.startsWith(code))) {
-      return res.render('add', { error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` });
+      return isApiRequest
+        ? res.status(400).json({ error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` })
+        : res.render('add', { error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` });
     }
 
     // Nếu khoa chưa tồn tại, thêm vào danh sách
@@ -473,15 +495,21 @@ export const postAddStudent = async (req, res) => {
       await config.save();
     }
 
+    // Tạo sinh viên mới
     const newStudent = new Student(req.body);
     await newStudent.save();
 
-    res.redirect('/list');
+    // Trả về JSON nếu request từ API, hoặc redirect nếu từ giao diện web
+    return isApiRequest
+      ? res.status(201).json({ student: newStudent })
+      : res.redirect('/list');
+
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Lỗi khi thêm sinh viên');
+    console.error(error);
+    res.status(500).json({ error: "Lỗi khi thêm sinh viên" });
   }
 };
+
 
 // Tìm kiếm sinh viên theo MSSV hoặc Họ tên
 export const getSearchStudent = async (req, res) => {

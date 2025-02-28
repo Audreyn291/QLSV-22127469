@@ -12,17 +12,17 @@ export async function connectDatabase() {
 
 // Định nghĩa Schema cho sinh viên
 const studentSchema = new mongoose.Schema({
-    mssv: String,
-    họVàTên: String,
-    ngàySinh: String,
+    mssv: { type: String, unique: true, required: true },
+    họVàTên: { type: String, required: true },
+    email: { type: String, required: true },
     giớiTính: String,
     khoa: String,
     khóa: String,
     chươngTrình: String,
     địaChỉ: String,
-    email: String,
     sốĐiệnThoại: String,
     tìnhTrạng: String
 });
 
 export const Student = mongoose.model('Student', studentSchema);
+export default Student;

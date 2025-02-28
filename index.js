@@ -44,3 +44,5 @@ const startServer = async () => {
 };
 
 startServer(); // Gọi hàm khởi động server
+export default app;
+

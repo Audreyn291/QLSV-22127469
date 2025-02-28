@@ -56,71 +56,355 @@
 2025-02-21 19:45:50 [INFO]: Lấy danh sách khoa
 2025-02-21 19:46:07 [INFO]: Lấy danh sách khoa
 2025-02-21 19:47:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
-2025-02-26 15:17:08 [INFO]: Truy cập trang chủ
-2025-02-26 15:17:09 [INFO]: [GET] /api/version
-2025-02-26 15:17:09 [INFO]: Lấy thông tin phiên bản ứng dụng.
-2025-02-26 15:17:09 [INFO]: [GET] /favicon.ico
-2025-02-26 15:17:16 [INFO]: Lấy danh sách khoa
-2025-02-26 15:17:18 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
-2025-02-26 15:17:26 [INFO]: Lấy danh sách khoa
-2025-02-27 22:13:50 [INFO]: Truy cập trang chủ
-2025-02-27 22:13:50 [INFO]: [GET] /api/version
-2025-02-27 22:13:50 [INFO]: Lấy thông tin phiên bản ứng dụng.
-2025-02-27 22:13:50 [INFO]: [GET] /favicon.ico
-2025-02-27 22:15:01 [INFO]: Truy cập trang chủ
-2025-02-27 22:15:01 [INFO]: [GET] /api/version
-2025-02-27 22:15:01 [INFO]: Lấy thông tin phiên bản ứng dụng.
-2025-02-27 22:15:04 [INFO]: [GET] /email-config
-2025-02-27 22:15:04 [INFO]: [GET] /config/email-domains
-2025-02-27 22:15:17 [INFO]: [POST] /config/email-domains
-2025-02-27 22:15:19 [INFO]: [GET] /config/email-domains
-2025-02-27 22:15:33 [INFO]: [POST] /config/email-domains
-2025-02-27 22:15:36 [INFO]: [GET] /config/email-domains
-2025-02-27 22:16:03 [INFO]: Truy cập trang chủ
-2025-02-27 22:16:03 [INFO]: [GET] /api/version
-2025-02-27 22:16:03 [INFO]: Lấy thông tin phiên bản ứng dụng.
-2025-02-27 22:16:39 [INFO]: [GET] /email-config
-2025-02-27 22:16:39 [INFO]: [GET] /config/email-domains
-2025-02-27 22:17:41 [INFO]: [GET] /email-config
-2025-02-27 22:17:41 [INFO]: [GET] /config/email-domains
-2025-02-27 22:17:54 [INFO]: [GET] /email-config
-2025-02-27 22:17:55 [INFO]: [GET] /config/email-domains
-2025-02-27 22:19:00 [INFO]: [GET] /email-config
-2025-02-27 22:19:00 [INFO]: [GET] /config/email-domains
-2025-02-27 22:19:00 [INFO]: [GET] /favicon.ico
-2025-02-28 12:40:29 [INFO]: [GET] /email-config
-2025-02-28 12:40:29 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:40:29 [INFO]: [GET] /config/email-domains
-2025-02-28 12:40:29 [INFO]: [GET] /favicon.ico
-2025-02-28 12:41:09 [INFO]: [GET] /email-config
-2025-02-28 12:41:09 [INFO]: [GET] /config/email-domains
-2025-02-28 12:41:09 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:41:50 [INFO]: [GET] /email-config
-2025-02-28 12:41:50 [INFO]: [GET] /config/email-domains
-2025-02-28 12:41:50 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:43:13 [INFO]: [GET] /email-config
-2025-02-28 12:43:13 [INFO]: [GET] /config/email-domains
-2025-02-28 12:43:13 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:44:12 [INFO]: Truy cập trang chủ
-2025-02-28 12:44:12 [INFO]: [GET] /api/version
-2025-02-28 12:44:12 [INFO]: Lấy thông tin phiên bản ứng dụng.
-2025-02-28 12:44:12 [INFO]: [GET] /favicon.ico
-2025-02-28 12:44:51 [INFO]: [GET] /email-config
-2025-02-28 12:44:51 [INFO]: [GET] /config/email-domains
-2025-02-28 12:44:51 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:45:59 [INFO]: [GET] /email-config
-2025-02-28 12:45:59 [INFO]: [GET] /config/email-domains
-2025-02-28 12:45:59 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:48:30 [INFO]: [GET] /email-config
-2025-02-28 12:48:31 [INFO]: [GET] /config/email-domains
-2025-02-28 12:48:31 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:49:36 [INFO]: [GET] /email-config
-2025-02-28 12:49:36 [INFO]: [GET] /config/email-domains
-2025-02-28 12:49:36 [INFO]: [GET] /config/phone-codes
-2025-02-28 12:49:50 [INFO]: [DELETE] /config/status-rules
-2025-02-28 12:49:57 [INFO]: [POST] /config/status-rules
-2025-02-28 12:50:13 [INFO]: [POST] /config/email-domains
-2025-02-28 12:50:14 [INFO]: [GET] /config/email-domains
-2025-02-28 12:50:19 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
-2025-02-28 12:50:33 [INFO]: Xóa sinh viên thành công - ID: 67c08349c3d22d7236f66eac
-2025-02-28 12:50:34 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 16:35:09 [INFO]: Truy cập trang chủ
+2025-02-27 16:35:10 [INFO]: [GET] /api/version
+2025-02-27 16:35:10 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 16:35:10 [INFO]: [GET] /favicon.ico
+2025-02-27 16:36:03 [INFO]: [GET] /email-config
+2025-02-27 16:36:03 [INFO]: [GET] /config/email-domains
+2025-02-27 16:37:57 [INFO]: [GET] /email-config
+2025-02-27 16:37:57 [INFO]: [GET] /config/email-domains
+2025-02-27 16:38:14 [INFO]: [GET] /email-config
+2025-02-27 16:38:14 [INFO]: [GET] /config/email-domains
+2025-02-27 16:38:16 [INFO]: [GET] /email-config
+2025-02-27 16:38:16 [INFO]: [GET] /config/email-domains
+2025-02-27 16:38:24 [INFO]: [GET] /email-config
+2025-02-27 16:38:24 [INFO]: [GET] /config/email-domains
+2025-02-27 16:38:26 [INFO]: [GET] /email-config
+2025-02-27 16:38:26 [INFO]: [GET] /config/email-domains
+2025-02-27 16:38:28 [INFO]: [GET] /email-config
+2025-02-27 16:38:28 [INFO]: [GET] /config/email-domains
+2025-02-27 16:41:58 [INFO]: [GET] /email-config
+2025-02-27 16:41:58 [INFO]: [GET] /config/email-domains
+2025-02-27 16:42:03 [INFO]: [GET] /email-config
+2025-02-27 16:42:03 [INFO]: [GET] /config/email-domains
+2025-02-27 16:42:11 [INFO]: [POST] /config/email-domains
+2025-02-27 16:42:13 [INFO]: [GET] /config/email-domains
+2025-02-27 16:42:23 [INFO]: [GET] /email-config
+2025-02-27 16:42:23 [INFO]: [GET] /config/email-domains
+2025-02-27 16:44:59 [INFO]: Lấy danh sách khoa
+2025-02-27 16:45:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 16:59:15 [INFO]: [GET] /config/email-domains
+2025-02-27 17:06:09 [INFO]: [GET] /config/email-domains
+2025-02-27 17:06:40 [INFO]: [GET] /config/email-domains
+2025-02-27 17:06:47 [INFO]: [GET] /config/email-domains
+2025-02-27 17:06:54 [INFO]: [GET] /config/email-domains
+2025-02-27 17:06:59 [INFO]: [GET] /config/email-domains
+2025-02-27 17:08:29 [INFO]: [GET] /config/email-domains
+2025-02-27 17:08:34 [INFO]: [GET] /config/email-domains
+2025-02-27 17:08:36 [INFO]: [GET] /config/email-domains
+2025-02-27 17:09:05 [INFO]: [GET] /config/email-domains
+2025-02-27 17:13:54 [INFO]: [GET] /config/email-domains
+2025-02-27 17:13:56 [INFO]: [GET] /config/email-domains
+2025-02-27 17:14:19 [INFO]: [GET] /config/email-domains
+2025-02-27 17:14:23 [INFO]: [GET] /config/email-domains
+2025-02-27 20:33:36 [INFO]: [GET] /config/email-domains
+2025-02-27 20:34:11 [INFO]: [GET] /config/email-domains
+2025-02-27 20:35:22 [INFO]: [GET] /config/email-domains
+2025-02-27 20:35:31 [INFO]: [GET] /config/email-domains
+2025-02-27 20:42:52 [INFO]: Truy cập trang chủ
+2025-02-27 20:42:52 [INFO]: [GET] /api/version
+2025-02-27 20:42:52 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 20:42:54 [INFO]: [GET] /config/email-domains
+2025-02-27 20:43:19 [INFO]: [GET] /config/email-domains
+2025-02-27 20:43:37 [INFO]: [GET] /config/email-domains
+2025-02-27 20:50:43 [INFO]: Truy cập trang chủ
+2025-02-27 20:50:43 [INFO]: [GET] /api/version
+2025-02-27 20:50:43 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 20:50:46 [INFO]: [GET] /config/email-domains
+2025-02-27 20:51:07 [INFO]: [GET] /config/email-domains
+2025-02-27 20:55:06 [INFO]: [GET] /config/email-domains
+2025-02-27 20:57:22 [INFO]: [GET] /config/email-domains
+2025-02-27 21:00:34 [INFO]: [GET] /config/email-domains
+2025-02-27 21:10:41 [INFO]: Truy cập trang chủ
+2025-02-27 21:10:41 [INFO]: [GET] /api/version
+2025-02-27 21:10:41 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 21:11:02 [INFO]: [GET] /config/email-domains
+2025-02-27 21:11:02 [INFO]: [GET] /config/email-domains
+2025-02-27 21:11:08 [INFO]: [GET] /email-config
+2025-02-27 21:11:10 [INFO]: [GET] /email-config
+2025-02-27 21:11:12 [INFO]: [GET] /email-config
+2025-02-27 21:11:14 [INFO]: [GET] /email-config
+2025-02-27 21:11:56 [INFO]: [GET] /config/email-domains
+2025-02-27 21:11:56 [INFO]: [GET] /config/email-domains
+2025-02-27 21:11:56 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:12:39 [INFO]: Lấy danh sách khoa
+2025-02-27 21:12:39 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:12:42 [INFO]: Xóa sinh viên thành công - ID: 67c072ac74e3956454bc643a
+2025-02-27 21:12:43 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:13:23 [INFO]: [GET] /config/email-domains
+2025-02-27 21:13:23 [INFO]: [GET] /config/email-domains
+2025-02-27 21:13:23 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:14:32 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:14:35 [INFO]: Xóa sinh viên thành công - ID: 67c0730374e3956454bc6449
+2025-02-27 21:14:36 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:16:49 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:17:17 [INFO]: [GET] /config/email-domains
+2025-02-27 21:17:17 [INFO]: [GET] /config/email-domains
+2025-02-27 21:17:21 [INFO]: Lấy danh sách khoa
+2025-02-27 21:17:23 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:19:36 [INFO]: [GET] /config/email-domains
+2025-02-27 21:19:36 [INFO]: [GET] /config/email-domains
+2025-02-27 21:19:37 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:20:49 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:20:53 [INFO]: Xóa sinh viên thành công - ID: 67c07479487cfe690312111b
+2025-02-27 21:20:54 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:21:22 [INFO]: [GET] /config/email-domains
+2025-02-27 21:21:22 [INFO]: [GET] /config/email-domains
+2025-02-27 21:21:22 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:21:28 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:21:32 [INFO]: Xóa sinh viên thành công - ID: 67c074e2be8573e0cb3b6f38
+2025-02-27 21:21:33 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:29:07 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:29:25 [INFO]: [GET] /config/email-domains
+2025-02-27 21:29:25 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 21:29:29 [INFO]: Xóa sinh viên thành công - ID: 67c076c5dfbaa726b2d2af1d
+2025-02-27 21:29:30 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:29:32 [INFO]: [GET] /email-config
+2025-02-27 21:31:35 [INFO]: [GET] /email-config
+2025-02-27 21:31:35 [INFO]: [GET] /config/email-domains
+2025-02-27 21:49:37 [INFO]: [GET] /email-config
+2025-02-27 21:49:37 [INFO]: [GET] /config/phone-codes
+2025-02-27 21:49:37 [INFO]: [GET] /config/email-domains
+2025-02-27 21:50:32 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-27 21:51:32 [INFO]: Truy cập trang chủ
+2025-02-27 21:51:32 [INFO]: [GET] /api/version
+2025-02-27 21:51:32 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 21:57:12 [INFO]: Nhận yêu cầu xóa cấu hình - Loại: departments, Giá trị: null
+2025-02-27 21:57:12 [WARN]: Không tìm thấy giá trị cấu hình để xóa - Loại: departments, Giá trị: null
+2025-02-27 21:57:43 [INFO]: Nhận yêu cầu xóa cấu hình - Loại: departments, Giá trị: null
+2025-02-27 21:57:43 [WARN]: Không tìm thấy giá trị cấu hình để xóa - Loại: departments, Giá trị: null
+2025-02-27 21:58:26 [INFO]: [GET] /config/email-domains
+2025-02-27 21:58:26 [INFO]: [GET] /config/phone-codes
+2025-02-27 21:59:15 [INFO]: [GET] /config/email-domains
+2025-02-27 21:59:15 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:04:56 [INFO]: [GET] /config/email-domains
+2025-02-27 22:04:56 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:05:55 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:05:55 [INFO]: [GET] /config/email-domains
+2025-02-27 22:06:29 [INFO]: [GET] /config/email-domains
+2025-02-27 22:06:29 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:07:08 [INFO]: [GET] /config/email-domains
+2025-02-27 22:07:08 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:08:19 [INFO]: [GET] /config/email-domains
+2025-02-27 22:08:19 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:10:56 [INFO]: [GET] /config/email-domains
+2025-02-27 22:10:56 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:18:01 [INFO]: [GET] /email-config
+2025-02-27 22:18:01 [INFO]: [GET] /config/email-domains
+2025-02-27 22:18:01 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:22:37 [INFO]: [GET] /config/email-domains
+2025-02-27 22:22:44 [INFO]: [GET] /config/email-domains
+2025-02-27 22:22:44 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:22:49 [INFO]: [GET] /config/email-domains
+2025-02-27 22:22:49 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:22:49 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:46:21 [INFO]: [GET] /email-config
+2025-02-27 22:46:21 [INFO]: [GET] /config/status-rules
+2025-02-27 22:46:21 [INFO]: [GET] /config/phone-codes
+2025-02-27 22:46:21 [INFO]: [GET] /config/email-domains
+2025-02-27 22:46:33 [INFO]: Lấy danh sách khoa
+2025-02-27 22:46:35 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:47:19 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:47:20 [INFO]: [GET] /config/status-rules
+2025-02-27 22:47:21 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-27 22:47:21 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K23","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-27 22:47:33 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:47:34 [INFO]: [GET] /config/status-rules
+2025-02-27 22:47:35 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-27 22:47:35 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K23","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-27 22:47:38 [INFO]: [GET] /config/status-rules
+2025-02-27 22:47:40 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-27 22:47:40 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-27 22:47:57 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:48:00 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-27 22:48:00 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học"}
+2025-02-27 22:50:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:50:04 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-27 22:50:04 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học"}
+2025-02-27 22:50:04 [INFO]: Cập nhật thành công - ID: 67b5bdecc9b4b109c3478309, Dữ liệu mới: {"_id":"67b5bdecc9b4b109c3478309","mssv":"22120001","họVàTên":"Nguyễn Văn A","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","email":"nguyenvana@example.com","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học","__v":0}
+2025-02-27 22:50:05 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-27 22:50:07 [INFO]: [GET] /email-config
+2025-02-27 22:50:07 [INFO]: [GET] /config/email-domains
+2025-02-27 22:50:07 [INFO]: [GET] /config/phone-codes
+2025-02-28 09:54:42 [INFO]: Truy cập trang chủ
+2025-02-28 09:54:42 [INFO]: [GET] /api/version
+2025-02-28 09:54:42 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-28 09:54:42 [INFO]: [GET] /favicon.ico
+2025-02-28 09:54:44 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 09:54:49 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 09:54:49 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K23","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học"}
+2025-02-28 09:55:08 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 09:56:04 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 09:57:35 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 09:58:16 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c347830e
+2025-02-28 09:58:16 [INFO]: Dữ liệu từ frontend: {"họVàTên":"","email":"danggiaf@example.com","ngàySinh":"2000-12-10","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K22","chươngTrình":"Chính quy","địaChỉ":"Hải Phòng","sốĐiệnThoại":"0967890123","tìnhTrạng":"Đang học"}
+2025-02-28 09:58:16 [INFO]: Cập nhật thành công - ID: 67b5bdecc9b4b109c347830e, Dữ liệu mới: {"_id":"67b5bdecc9b4b109c347830e","mssv":"22120006","họVàTên":"Đặng Gia F","ngàySinh":"2000-12-10","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K22","chươngTrình":"Chính quy","địaChỉ":"Hải Phòng","email":"danggiaf@example.com","sốĐiệnThoại":"0967890123","tìnhTrạng":"Đang học","__v":0}
+2025-02-28 09:58:17 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 09:59:07 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:02:40 [INFO]: Truy cập trang chủ
+2025-02-28 10:02:40 [INFO]: [GET] /api/version
+2025-02-28 10:02:40 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-28 10:04:08 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:04:22 [INFO]: [GET] /email-config
+2025-02-28 10:04:22 [INFO]: [GET] /config/phone-codes
+2025-02-28 10:04:22 [INFO]: [GET] /config/email-domains
+2025-02-28 10:09:03 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:09:08 [INFO]: [GET] /email-config
+2025-02-28 10:09:08 [INFO]: [GET] /config/email-domains
+2025-02-28 10:09:08 [INFO]: [GET] /config/phone-codes
+2025-02-28 10:11:06 [INFO]: [GET] /email-config
+2025-02-28 10:11:07 [INFO]: [GET] /config/email-domains
+2025-02-28 10:11:07 [INFO]: [GET] /config/phone-codes
+2025-02-28 10:11:18 [INFO]: [POST] /config/status-rules
+2025-02-28 10:11:24 [INFO]: [DELETE] /config/status-rules
+2025-02-28 10:11:27 [INFO]: [GET] /email-config
+2025-02-28 10:11:27 [INFO]: [GET] /config/email-domains
+2025-02-28 10:11:27 [INFO]: [GET] /config/phone-codes
+2025-02-28 10:11:28 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:11:36 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:11:36 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đã tốt nghiệp"}
+2025-02-28 10:12:02 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:12:02 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đã tốt nghiệp"}
+2025-02-28 10:21:50 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:21:54 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:21:54 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:23:31 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:23:34 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:23:34 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:24:37 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:24:37 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:28:23 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:28:28 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:28:28 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:31:49 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:31:52 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:31:52 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:33:40 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:33:42 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:33:42 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:35:00 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:35:06 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:35:06 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:36:48 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:36:50 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:36:50 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:36:50 [ERROR]: Lỗi khi cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309, Lỗi: statusRules.get is not a function
+2025-02-28 10:37:07 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:37:07 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:37:07 [ERROR]: Lỗi khi cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309, Lỗi: statusRules.get is not a function
+2025-02-28 10:38:08 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:38:12 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:38:12 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:38:12 [ERROR]: Lỗi khi cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309, Lỗi: statusRules.get is not a function
+2025-02-28 10:38:30 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:38:37 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:38:37 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:38:37 [ERROR]: Lỗi khi cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309, Lỗi: statusRules.get is not a function
+2025-02-28 10:41:36 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:41:39 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:41:39 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:41:39 [INFO]: Cập nhật thành công - ID: 67b5bdecc9b4b109c3478309, Dữ liệu mới: {"_id":"67b5bdecc9b4b109c3478309","mssv":"22120001","họVàTên":"Nguyễn Văn A","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","email":"nguyenvana@example.com","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu","__v":0}
+2025-02-28 10:42:05 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:42:07 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:42:11 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:42:11 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học"}
+2025-02-28 10:42:11 [INFO]: Cập nhật thành công - ID: 67b5bdecc9b4b109c3478309, Dữ liệu mới: {"_id":"67b5bdecc9b4b109c3478309","mssv":"22120001","họVàTên":"Nguyễn Văn A","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","email":"nguyenvana@example.com","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học","__v":0}
+2025-02-28 10:45:06 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:45:08 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:45:08 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu"}
+2025-02-28 10:45:09 [INFO]: Cập nhật thành công - ID: 67b5bdecc9b4b109c3478309, Dữ liệu mới: {"_id":"67b5bdecc9b4b109c3478309","mssv":"22120001","họVàTên":"Nguyễn Văn A","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","email":"nguyenvana@example.com","sốĐiệnThoại":"0912345678","tìnhTrạng":"Bảo lưu","__v":0}
+2025-02-28 10:45:10 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:45:12 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 10:45:16 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 10:45:16 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Văn A","email":"nguyenvana@example.com","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học"}
+2025-02-28 10:45:16 [INFO]: Cập nhật thành công - ID: 67b5bdecc9b4b109c3478309, Dữ liệu mới: {"_id":"67b5bdecc9b4b109c3478309","mssv":"22120001","họVàTên":"Nguyễn Văn A","ngàySinh":"2001-05-12","giớiTính":"Nam","khoa":"Khoa Công nghệ thông tin","khóa":"K24","chươngTrình":"Chính quy","địaChỉ":"Hà Nội","email":"nguyenvana@example.com","sốĐiệnThoại":"0912345678","tìnhTrạng":"Đang học","__v":0}
+2025-02-28 10:45:17 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 19:35:20 [INFO]: [POST] /config/email-domains
+2025-02-28 19:35:20 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:35:20 [INFO]: [POST] /students
+2025-02-28 19:35:20 [INFO]: [POST] /students
+2025-02-28 19:35:20 [INFO]: Xóa sinh viên thành công - ID: 67c1ad88ce58a7b98e78e43b
+2025-02-28 19:35:46 [INFO]: Truy cập trang chủ
+2025-02-28 19:35:46 [INFO]: [GET] /api/version
+2025-02-28 19:35:46 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-28 19:35:47 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
+2025-02-28 19:35:58 [INFO]: Xuất Excel thành công - 12 sinh viên.
+2025-02-28 19:36:16 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c3478309
+2025-02-28 19:36:19 [INFO]: Lấy danh sách sinh viên - Số lượng: 11
+2025-02-28 19:36:20 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c347830a
+2025-02-28 19:36:22 [INFO]: Lấy danh sách sinh viên - Số lượng: 10
+2025-02-28 19:36:26 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c347830b
+2025-02-28 19:36:27 [INFO]: Lấy danh sách sinh viên - Số lượng: 9
+2025-02-28 19:36:29 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c347830c
+2025-02-28 19:36:31 [INFO]: Lấy danh sách sinh viên - Số lượng: 8
+2025-02-28 19:36:32 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c347830d
+2025-02-28 19:36:33 [INFO]: Lấy danh sách sinh viên - Số lượng: 7
+2025-02-28 19:36:36 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c347830e
+2025-02-28 19:36:36 [INFO]: Lấy danh sách sinh viên - Số lượng: 6
+2025-02-28 19:36:39 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c347830f
+2025-02-28 19:36:41 [INFO]: Lấy danh sách sinh viên - Số lượng: 5
+2025-02-28 19:36:42 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c3478310
+2025-02-28 19:36:43 [INFO]: Lấy danh sách sinh viên - Số lượng: 4
+2025-02-28 19:36:45 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c3478311
+2025-02-28 19:36:46 [INFO]: Lấy danh sách sinh viên - Số lượng: 3
+2025-02-28 19:37:36 [INFO]: Xóa sinh viên thành công - ID: 67b5bdecc9b4b109c3478312
+2025-02-28 19:37:37 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-02-28 19:40:04 [INFO]: Xóa sinh viên thành công - ID: 67b5de188ba7bf0eb19b0c17
+2025-02-28 19:40:05 [INFO]: Lấy danh sách sinh viên - Số lượng: 1
+2025-02-28 19:40:08 [INFO]: Xóa sinh viên thành công - ID: 67b875c42e9cbdfea2ca6840
+2025-02-28 19:40:09 [INFO]: Lấy danh sách sinh viên - Số lượng: 0
+2025-02-28 19:40:25 [INFO]: [POST] /config/email-domains
+2025-02-28 19:40:25 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:40:25 [INFO]: [POST] /students
+2025-02-28 19:40:25 [INFO]: [POST] /students
+2025-02-28 19:40:25 [INFO]: Xóa sinh viên thành công - ID: 67c1aeb9054a9715e5f6fc57
+2025-02-28 19:44:37 [INFO]: [POST] /config/email-domains
+2025-02-28 19:44:37 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:44:37 [INFO]: [POST] /students
+2025-02-28 19:47:28 [INFO]: [POST] /config/email-domains
+2025-02-28 19:47:28 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:52:10 [INFO]: [POST] /config/email-domains
+2025-02-28 19:52:10 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:55:31 [INFO]: [POST] /config/email-domains
+2025-02-28 19:55:31 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:57:56 [INFO]: [POST] /config/email-domains
+2025-02-28 19:57:56 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:57:56 [INFO]: Xóa sinh viên thành công - ID: 67c1b2d4d5b641c479d36af1
+2025-02-28 19:59:55 [INFO]: [POST] /config/email-domains
+2025-02-28 19:59:55 [INFO]: [POST] /config/phone-codes
+2025-02-28 19:59:55 [INFO]: Xóa sinh viên thành công - ID: 67c1b34b05d8ba9f6e5edad9
+2025-02-28 20:00:42 [INFO]: [POST] /config/email-domains
+2025-02-28 20:00:42 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:00:42 [INFO]: Xóa sinh viên thành công - ID: 67c1b37a3c16ab1e4eb926e5
+2025-02-28 20:02:03 [INFO]: [POST] /config/email-domains
+2025-02-28 20:02:03 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:02:03 [INFO]: Xóa sinh viên thành công - ID: 67c1b3cbc78924609b07a551
+2025-02-28 20:02:50 [INFO]: [POST] /config/email-domains
+2025-02-28 20:02:50 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:02:50 [INFO]: Xóa sinh viên thành công - ID: 67c1b3fa48b3634ec914e432
+2025-02-28 20:03:40 [INFO]: [POST] /config/email-domains
+2025-02-28 20:03:40 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:03:40 [INFO]: Xóa sinh viên thành công - ID: 67c1b42c0a53804e34db49f1
+2025-02-28 20:07:02 [INFO]: [POST] /config/email-domains
+2025-02-28 20:07:02 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:07:03 [INFO]: Xóa sinh viên thành công - ID: 67c1b4f78931bad6e9e70086
+2025-02-28 20:08:09 [INFO]: [POST] /config/email-domains
+2025-02-28 20:08:09 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:08:09 [INFO]: Xóa sinh viên thành công - ID: 67c1b539752f5e4b317a4d03
+2025-02-28 20:15:10 [INFO]: [POST] /config/email-domains
+2025-02-28 20:15:10 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:15:10 [INFO]: Xóa sinh viên thành công - ID: 67c1b6de37cb343ae526cd4c
+2025-02-28 20:15:41 [INFO]: [POST] /config/email-domains
+2025-02-28 20:15:41 [INFO]: [POST] /config/phone-codes
+2025-02-28 20:15:41 [INFO]: Xóa sinh viên thành công - ID: 67c1b6fd6a377cc7bda15d3e
+2025-02-28 21:31:50 [INFO]: Truy cập trang chủ
+2025-02-28 21:31:50 [INFO]: [GET] /api/version
+2025-02-28 21:31:50 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-28 21:31:50 [INFO]: [GET] /favicon.ico
+2025-02-28 21:31:54 [INFO]: [GET] /email-config
+2025-02-28 21:31:54 [INFO]: [GET] /config/email-domains
+2025-02-28 21:31:54 [INFO]: [GET] /config/phone-codes
+2025-02-28 21:32:51 [INFO]: [GET] /email-config
+2025-02-28 21:32:51 [INFO]: [GET] /config/email-domains
+2025-02-28 21:32:51 [INFO]: [GET] /config/phone-codes
