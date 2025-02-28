@@ -63,3 +63,28 @@
 2025-02-26 15:17:16 [INFO]: Lấy danh sách khoa
 2025-02-26 15:17:18 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
 2025-02-26 15:17:26 [INFO]: Lấy danh sách khoa
+2025-02-27 22:13:50 [INFO]: Truy cập trang chủ
+2025-02-27 22:13:50 [INFO]: [GET] /api/version
+2025-02-27 22:13:50 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 22:13:50 [INFO]: [GET] /favicon.ico
+2025-02-27 22:15:01 [INFO]: Truy cập trang chủ
+2025-02-27 22:15:01 [INFO]: [GET] /api/version
+2025-02-27 22:15:01 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 22:15:04 [INFO]: [GET] /email-config
+2025-02-27 22:15:04 [INFO]: [GET] /config/email-domains
+2025-02-27 22:15:17 [INFO]: [POST] /config/email-domains
+2025-02-27 22:15:19 [INFO]: [GET] /config/email-domains
+2025-02-27 22:15:33 [INFO]: [POST] /config/email-domains
+2025-02-27 22:15:36 [INFO]: [GET] /config/email-domains
+2025-02-27 22:16:03 [INFO]: Truy cập trang chủ
+2025-02-27 22:16:03 [INFO]: [GET] /api/version
+2025-02-27 22:16:03 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-27 22:16:39 [INFO]: [GET] /email-config
+2025-02-27 22:16:39 [INFO]: [GET] /config/email-domains
+2025-02-27 22:17:41 [INFO]: [GET] /email-config
+2025-02-27 22:17:41 [INFO]: [GET] /config/email-domains
+2025-02-27 22:17:54 [INFO]: [GET] /email-config
+2025-02-27 22:17:55 [INFO]: [GET] /config/email-domains
+2025-02-27 22:19:00 [INFO]: [GET] /email-config
+2025-02-27 22:19:00 [INFO]: [GET] /config/email-domains
+2025-02-27 22:19:00 [INFO]: [GET] /favicon.ico
