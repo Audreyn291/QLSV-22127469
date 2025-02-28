@@ -5,6 +5,7 @@ const optionSchema = new mongoose.Schema({
     statuses: { type: [String], default: ["Đang học", "Đã tốt nghiệp", "Đã thôi học", "Tạm dừng học"] },
     programs: { type: [String], default: ["Chất lượng cao", "Đại trà"] },
     emailDomains: { type: [String], default: ["student.university.edu.vn"] },
+    phoneCountryCodes: { type: [String], default: ["+84", "03", "05", "07", "08", "09"] },
 });
 
 const Option = mongoose.model('Option', optionSchema);

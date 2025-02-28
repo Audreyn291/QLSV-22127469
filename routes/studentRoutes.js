@@ -3,6 +3,7 @@ import { getStudentById, deleteStudent, updateStudent } from '../controllers/stu
 import { getConfig, addConfigItem, deleteConfigItem, renameConfigItem } from '../controllers/studentController.js';
 import { exportJSON, exportExcel, importData } from '../controllers/studentController.js';
 import { getEmailDomains, addEmailDomain, deleteEmailDomain } from '../controllers/studentController.js';
+import { getPhoneCountryCodes, addPhoneCountryCode, deletePhoneCountryCode } from '../controllers/studentController.js';
 import { getAppInfo } from '../controllers/studentController.js';
 import express from 'express';
 import multer from 'multer';
@@ -42,6 +43,11 @@ router.use((req, res, next) => {
 router.get('/config/email-domains', getEmailDomains);
 router.post('/config/email-domains', addEmailDomain);
 router.delete('/config/email-domains/:domain', deleteEmailDomain);
+
+router.get('/config/phone-codes', getPhoneCountryCodes);
+router.post('/config/phone-codes', addPhoneCountryCode);
+router.delete('/config/phone-codes/:code', deletePhoneCountryCode);
+
 
 router.get('/email-config', (req, res) => {
     res.render('emailConfig');

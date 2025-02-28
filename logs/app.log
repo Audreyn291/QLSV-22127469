@@ -88,3 +88,26 @@
 2025-02-27 22:19:00 [INFO]: [GET] /email-config
 2025-02-27 22:19:00 [INFO]: [GET] /config/email-domains
 2025-02-27 22:19:00 [INFO]: [GET] /favicon.ico
+2025-02-28 12:40:29 [INFO]: [GET] /email-config
+2025-02-28 12:40:29 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:40:29 [INFO]: [GET] /config/email-domains
+2025-02-28 12:40:29 [INFO]: [GET] /favicon.ico
+2025-02-28 12:41:09 [INFO]: [GET] /email-config
+2025-02-28 12:41:09 [INFO]: [GET] /config/email-domains
+2025-02-28 12:41:09 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:41:50 [INFO]: [GET] /email-config
+2025-02-28 12:41:50 [INFO]: [GET] /config/email-domains
+2025-02-28 12:41:50 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:43:13 [INFO]: [GET] /email-config
+2025-02-28 12:43:13 [INFO]: [GET] /config/email-domains
+2025-02-28 12:43:13 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:44:12 [INFO]: Truy cập trang chủ
+2025-02-28 12:44:12 [INFO]: [GET] /api/version
+2025-02-28 12:44:12 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-02-28 12:44:12 [INFO]: [GET] /favicon.ico
+2025-02-28 12:44:51 [INFO]: [GET] /email-config
+2025-02-28 12:44:51 [INFO]: [GET] /config/email-domains
+2025-02-28 12:44:51 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:45:59 [INFO]: [GET] /email-config
+2025-02-28 12:45:59 [INFO]: [GET] /config/email-domains
+2025-02-28 12:45:59 [INFO]: [GET] /config/phone-codes

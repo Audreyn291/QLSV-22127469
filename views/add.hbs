@@ -90,45 +90,49 @@
 <script>
     document.getElementById("add-student-form").addEventListener("submit", async function (event) {
         event.preventDefault();
-        const emailInput = document.querySelector("input[name='email']");
-        const email = emailInput.value.trim();
 
-        // Lấy danh sách domain hợp lệ từ API
-        const response = await fetch('/config/email-domains');
-        const allowedDomains = await response.json();
-
-        const emailDomain = email.split('@').pop();
-        if (!allowedDomains.includes(emailDomain)) {
-            alert(`Email phải thuộc các tên miền: ${allowedDomains.join(", ")}`);
-            return;
-        }
-
-        this.submit();
-    });
-
-    document.getElementById("add-student-form").addEventListener("submit", function (event) {
         const emailInput = document.querySelector("input[name='email']");
         const phoneInput = document.querySelector("input[name='sốĐiệnThoại']");
-
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
 
-        // Biểu thức chính quy kiểm tra email
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailPattern.test(email)) {
-            alert("Email không hợp lệ! Vui lòng nhập đúng định dạng (ví dụ: example@gmail.com).");
-            event.preventDefault(); // Ngăn chặn form gửi đi
+        // Lấy danh sách domain hợp lệ từ API
+        const emailResponse = await fetch('/config/email-domains');
+        const allowedDomains = await emailResponse.json();
+
+        const emailDomain = email.split('@').pop();
+        if (!allowedDomains.includes(emailDomain)) {
+            alert(`Email phải thuộc các tên miền hợp lệ: ${allowedDomains.join(", ")}`);
             return;
         }
 
-        // Biểu thức chính quy kiểm tra số điện thoại (chỉ chứa số, 10-11 số)
+        // Lấy danh sách mã quốc gia hợp lệ từ API
+        const phoneResponse = await fetch('/config/phone-codes');
+        const allowedPhoneCodes = await phoneResponse.json();
+
+        if (!allowedPhoneCodes.some(code => phone.startsWith(code))) {
+            alert(`Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(", ")}`);
+            return;
+        }
+
+        // Kiểm tra định dạng email hợp lệ
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email)) {
+            alert("Email không hợp lệ! Vui lòng nhập đúng định dạng (ví dụ: example@gmail.com).");
+            return;
+        }
+
+        // Kiểm tra định dạng số điện thoại (10-11 số)
         const phonePattern = /^[0-9]{10,11}$/;
         if (!phonePattern.test(phone)) {
             alert("Số điện thoại không hợp lệ! Vui lòng nhập số có 10 hoặc 11 chữ số.");
-            event.preventDefault();
             return;
         }
+
+        // Nếu không có lỗi, submit form
+        this.submit();
     });
+
     async function fetchConfig() {
         const response = await fetch('/config');
         const config = await response.json();
