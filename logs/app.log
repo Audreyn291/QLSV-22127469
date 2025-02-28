@@ -111,3 +111,16 @@
 2025-02-28 12:45:59 [INFO]: [GET] /email-config
 2025-02-28 12:45:59 [INFO]: [GET] /config/email-domains
 2025-02-28 12:45:59 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:48:30 [INFO]: [GET] /email-config
+2025-02-28 12:48:31 [INFO]: [GET] /config/email-domains
+2025-02-28 12:48:31 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:49:36 [INFO]: [GET] /email-config
+2025-02-28 12:49:36 [INFO]: [GET] /config/email-domains
+2025-02-28 12:49:36 [INFO]: [GET] /config/phone-codes
+2025-02-28 12:49:50 [INFO]: [DELETE] /config/status-rules
+2025-02-28 12:49:57 [INFO]: [POST] /config/status-rules
+2025-02-28 12:50:13 [INFO]: [POST] /config/email-domains
+2025-02-28 12:50:14 [INFO]: [GET] /config/email-domains
+2025-02-28 12:50:19 [INFO]: Lấy danh sách sinh viên - Số lượng: 13
+2025-02-28 12:50:33 [INFO]: Xóa sinh viên thành công - ID: 67c08349c3d22d7236f66eac
+2025-02-28 12:50:34 [INFO]: Lấy danh sách sinh viên - Số lượng: 12
