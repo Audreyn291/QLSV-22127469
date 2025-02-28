@@ -103,6 +103,52 @@ export const deletePhoneCountryCode = async (req, res) => {
   }
 };
 
+export const addStatusRule = async (req, res) => {
+  try {
+    const { from, to } = req.body;
+    if (!from || !to || from === to) {
+      return res.status(400).json({ message: "Trạng thái không hợp lệ!" });
+    }
+
+    let config = await Option.findOne();
+    if (!config) config = new Option();
+
+    // Kiểm tra nếu quy tắc chưa tồn tại thì mới thêm
+    if (!config.statusRules.get(from)?.includes(to)) {
+      if (!config.statusRules.has(from)) {
+        config.statusRules.set(from, []);
+      }
+      config.statusRules.get(from).push(to);
+      await config.save();
+      return res.json({ message: `Đã thêm quy tắc: ${from} → ${to}` });
+    }
+
+    res.status(400).json({ message: "Quy tắc đã tồn tại!" });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi thêm quy tắc!" });
+  }
+};
+
+export const deleteStatusRule = async (req, res) => {
+  try {
+    const { from, to } = req.body;
+    let config = await Option.findOne();
+    if (!config) {
+      return res.status(404).json({ message: "Không tìm thấy cấu hình!" });
+    }
+
+    if (config.statusRules.has(from)) {
+      config.statusRules.set(from, config.statusRules.get(from).filter(status => status !== to));
+      await config.save();
+      return res.json({ message: `Đã xóa quy tắc: ${from} → ${to}` });
+    }
+
+    res.status(400).json({ message: "Không tìm thấy quy tắc để xóa!" });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi xóa quy tắc!" });
+  }
+};
+
 // Lấy đường dẫn hiện tại
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -484,19 +530,46 @@ export const deleteStudent = async (req, res) => {
 // Cập nhật thông tin sinh viên
 export const updateStudent = async (req, res) => {
   try {
-    logger.info(`Nhận yêu cầu cập nhật sinh viên - ID: ${req.params.id}`);
+    const studentId = req.params.id;
+    const { tìnhTrạng } = req.body;
+
+    logger.info(`Nhận yêu cầu cập nhật sinh viên - ID: ${studentId}`);
     logger.info(`Dữ liệu từ frontend: ${JSON.stringify(req.body)}`);
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      logger.warn(`ID không hợp lệ: ${req.params.id}`);
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+      logger.warn(`ID không hợp lệ: ${studentId}`);
       return res.status(400).json({ message: "ID không hợp lệ!" });
     }
 
-    const student = await Student.findById(req.params.id);
+    if (!tìnhTrạng) {
+      return res.status(400).json({ message: "Trạng thái mới không hợp lệ!" });
+    }
+
+    // Kiểm tra xem sinh viên có tồn tại không
+    const student = await Student.findById(studentId);
     if (!student) {
-      logger.warn(`Không tìm thấy sinh viên - ID: ${req.params.id}`);
+      logger.warn(`Không tìm thấy sinh viên - ID: ${studentId}`);
       return res.status(404).json({ message: "Không tìm thấy sinh viên." });
     }
+
+    // Lấy quy tắc trạng thái từ cấu hình
+    const config = await Option.findOne();
+    const statusRules = config?.statusRules ? JSON.parse(JSON.stringify(config.statusRules)) : {};
+
+    // console.log("Dữ liệu statusRules sau khi chuyển đổi:", statusRules);
+    // console.log(`Trạng thái hiện tại: ${student.tìnhTrạng}`);
+    // console.log("Trạng thái có thể chuyển đổi:", statusRules[student.tìnhTrạng]);
+
+    // Lấy danh sách trạng thái hợp lệ cho trạng thái hiện tại
+    const allowedNextStatuses = statusRules[student.tìnhTrạng] || [];
+
+    // Kiểm tra nếu trạng thái mới không hợp lệ
+    if (!Array.isArray(allowedNextStatuses) || !allowedNextStatuses.includes(tìnhTrạng)) {
+      return res.status(400).json({ message: `Không thể đổi từ "${student.tìnhTrạng}" sang "${tìnhTrạng}"!` });
+    }
+
+    // Cập nhật thông tin sinh viên
+    student.tìnhTrạng = tìnhTrạng;
 
     // Kiểm tra nếu dữ liệu trống thì không cập nhật
     let hasUpdate = false;
@@ -508,20 +581,21 @@ export const updateStudent = async (req, res) => {
     });
 
     if (!hasUpdate) {
-      logger.warn(`Không có dữ liệu mới để cập nhật - ID: ${req.params.id}`);
+      logger.warn(`Không có dữ liệu mới để cập nhật - ID: ${studentId}`);
       return res.status(400).json({ message: "Không có dữ liệu mới để cập nhật." });
     }
 
+    // Lưu thay đổi
     await student.save();
-    logger.info(`Cập nhật thành công - ID: ${req.params.id}, Dữ liệu mới: ${JSON.stringify(student)}`);
+    logger.info(`Cập nhật thành công - ID: ${studentId}, Dữ liệu mới: ${JSON.stringify(student)}`);
 
-    res.json({ message: "Cập nhật thông tin thành công!", student });
+    return res.json({ message: "Cập nhật thành công!", student });
+
   } catch (error) {
     logger.error(`Lỗi khi cập nhật sinh viên - ID: ${req.params.id}, Lỗi: ${error.message}`);
-    res.status(500).json({ message: "Lỗi khi cập nhật thông tin." });
+    return res.status(500).json({ message: "Lỗi khi cập nhật thông tin.", error });
   }
 };
-
 
 export const getStudentById = async (req, res) => {
   try {

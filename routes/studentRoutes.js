@@ -5,6 +5,7 @@ import { exportJSON, exportExcel, importData } from '../controllers/studentContr
 import { getEmailDomains, addEmailDomain, deleteEmailDomain } from '../controllers/studentController.js';
 import { getPhoneCountryCodes, addPhoneCountryCode, deletePhoneCountryCode } from '../controllers/studentController.js';
 import { getAppInfo } from '../controllers/studentController.js';
+import { addStatusRule, deleteStatusRule } from '../controllers/studentController.js';
 import express from 'express';
 import multer from 'multer';
 import logger from '../utils/logger.js';
@@ -48,11 +49,12 @@ router.get('/config/phone-codes', getPhoneCountryCodes);
 router.post('/config/phone-codes', addPhoneCountryCode);
 router.delete('/config/phone-codes/:code', deletePhoneCountryCode);
 
+router.post('/config/status-rules', addStatusRule);
+router.delete('/config/status-rules', deleteStatusRule);
 
 router.get('/email-config', (req, res) => {
     res.render('emailConfig');
 });
-
 
 router.get('/api/version', getAppInfo);  // Lấy thông tin phiên bản
 

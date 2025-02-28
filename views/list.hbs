@@ -89,16 +89,27 @@
         }
 
         try {
+            // Lấy thông tin sinh viên hiện tại
             let response = await fetch(`/students/${studentId}`);
             if (!response.ok) throw new Error(`Lỗi API: ${response.status}`);
-
             let student = await response.json();
 
+            // Lấy danh sách khoa, chương trình, và tình trạng hợp lệ từ localStorage
             let departments = JSON.parse(localStorage.getItem("departments")) || [];
-            let statuses = JSON.parse(localStorage.getItem("statuses")) || [];
             let programs = JSON.parse(localStorage.getItem("programs")) || [];
 
-            // Tạo danh sách select options
+            // Lấy quy tắc trạng thái từ API
+            let configResponse = await fetch('/config');
+            let config = await configResponse.json();
+            let statusRules = config.statusRules || {};
+
+            // Chỉ lấy danh sách trạng thái có thể chuyển đổi từ trạng thái hiện tại
+            let allowedNextStatuses = statusRules[student.tìnhTrạng] || [];
+            if (allowedNextStatuses.length === 0) {
+                allowedNextStatuses = [student.tìnhTrạng];
+            }
+
+            // Tạo danh sách `<option>` cho các select box
             let khoaSelectOptions = departments.map(k =>
                 `<option value="${k}" ${student.khoa === k ? "selected" : ""}>${k}</option>`
             ).join("");
@@ -107,86 +118,87 @@
                 `<option value="${p}" ${student.chươngTrình === p ? "selected" : ""}>${p}</option>`
             ).join("");
 
-            let statusSelectOptions = statuses.map(s =>
+            let statusSelectOptions = allowedNextStatuses.map(s =>
                 `<option value="${s}" ${student.tìnhTrạng === s ? "selected" : ""}>${s}</option>`
             ).join("");
 
             let formHtml = `
-            <div id="edit-form" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div class="bg-white p-6 rounded-lg shadow-lg w-[500px]">
-                    <h2 class="text-xl font-bold text-center mb-4">Chỉnh sửa thông tin sinh viên</h2>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block font-semibold">Mã số sinh viên</label>
-                            <input type="text" id="edit-mssv" value="${student.mssv}" class="w-full p-2 border rounded" readonly>
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Họ và Tên</label>
-                            <input type="text" id="edit-name" value="{{this.họVàTên}}" class="w-full p-2 border rounded">
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Ngày sinh</label>
-                            <input type="date" id="edit-birthday" value="${student.ngàySinh}" class="w-full p-2 border rounded">
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Giới tính</label>
-                            <select id="edit-gender" class="w-full p-2 border rounded">
-                                <option value="Nam" ${student.giớiTính === "Nam" ? "selected" : ""}>Nam</option>
-                                <option value="Nữ" ${student.giớiTính === "Nữ" ? "selected" : ""}>Nữ</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Khoa</label>
-                            <select id="edit-faculty" class="w-full p-2 border rounded">
-                                ${khoaSelectOptions}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Khóa</label>
-                            <input type="text" id="edit-course" value="${student.khóa}" class="w-full p-2 border rounded">
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Chương trình</label>
-                            <select id="edit-program" class="w-full p-2 border rounded">
-                            ${programSelectOptions}
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold">Địa chỉ</label>
-                            <input type="text" id="edit-address" value="${student.địaChỉ}" class="w-full p-2 border rounded">
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Email</label>
-                            <input type="email" id="edit-email" value="${student.email}" class="w-full p-2 border rounded">
-                        </div>
-
-                        <div>
-                            <label class="block font-semibold">Số điện thoại</label>
-                            <input type="text" id="edit-phone" value="${student.sốĐiệnThoại}" class="w-full p-2 border rounded">
-                        </div>
-
-                        <div class="col-span-2">
-                            <label class="block font-semibold">Tình trạng sinh viên</label>
-                            <select id="edit-status" class="w-full p-2 border rounded">
-                                ${statusSelectOptions}
-                            </select>
-                        </div>
+        <div id="edit-form" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-[500px]">
+                <h2 class="text-xl font-bold text-center mb-4">Chỉnh sửa thông tin sinh viên</h2>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold">Mã số sinh viên</label>
+                        <input type="text" id="edit-mssv" value="${student.mssv}" class="w-full p-2 border rounded" readonly>
                     </div>
 
-                    <div class="flex justify-end gap-2 mt-4">
-                        <button onclick="saveEdit('${student._id}')" class="bg-[#04B2D9]  text-white px-4 py-2 rounded">Lưu</button>
-                        <button onclick="closeEditForm()" class="bg-gray-400 text-white px-4 py-2 rounded">Hủy</button>
+                    <div>
+                        <label class="block font-semibold">Họ và Tên</label>
+                        <input type="text" id="edit-name" value="${student.họVàTên}" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Ngày sinh</label>
+                        <input type="date" id="edit-birthday" value="${student.ngàySinh}" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Giới tính</label>
+                        <select id="edit-gender" class="w-full p-2 border rounded">
+                            <option value="Nam" ${student.giớiTính === "Nam" ? "selected" : ""}>Nam</option>
+                            <option value="Nữ" ${student.giớiTính === "Nữ" ? "selected" : ""}>Nữ</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Khoa</label>
+                        <select id="edit-faculty" class="w-full p-2 border rounded">
+                            ${khoaSelectOptions}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Khóa</label>
+                        <input type="text" id="edit-course" value="${student.khóa}" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Chương trình</label>
+                        <select id="edit-program" class="w-full p-2 border rounded">
+                            ${programSelectOptions}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Địa chỉ</label>
+                        <input type="text" id="edit-address" value="${student.địaChỉ}" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Email</label>
+                        <input type="email" id="edit-email" value="${student.email}" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold">Số điện thoại</label>
+                        <input type="text" id="edit-phone" value="${student.sốĐiệnThoại}" class="w-full p-2 border rounded">
+                    </div>
+
+                    <div class="col-span-2">
+                        <label class="block font-semibold">Tình trạng sinh viên</label>
+                        <select id="edit-status" class="w-full p-2 border rounded">
+                            ${statusSelectOptions}
+                        </select>
                     </div>
                 </div>
+
+                <div class="flex justify-end gap-2 mt-4">
+                    <button onclick="saveEdit('${student._id}')" class="bg-[#04B2D9] text-white px-4 py-2 rounded">Lưu</button>
+                    <button onclick="closeEditForm()" class="bg-gray-400 text-white px-4 py-2 rounded">Hủy</button>
+                </div>
             </div>
+        </div>
         `;
 
             document.body.insertAdjacentHTML("beforeend", formHtml);
@@ -202,6 +214,14 @@
     }
 
     async function saveEdit(studentId) {
+        let statusElement = document.querySelector("#edit-status");
+        let newStatus = statusElement ? statusElement.value : null;
+
+        if (!newStatus || newStatus === "undefined") {
+            alert("Vui lòng chọn trạng thái hợp lệ!");
+            return;
+        }
+
         let updatedStudent = {
             họVàTên: document.querySelector("#edit-name")?.value.trim() || "",
             email: document.querySelector("#edit-email")?.value.trim() || "",
@@ -212,20 +232,20 @@
             chươngTrình: document.querySelector("#edit-program")?.value || "",
             địaChỉ: document.querySelector("#edit-address")?.value || "",
             sốĐiệnThoại: document.querySelector("#edit-phone")?.value || "",
-            tìnhTrạng: document.querySelector("#edit-status")?.value || ""
+            tìnhTrạng: newStatus  // Chắc chắn tình trạng có giá trị hợp lệ
         };
 
-        console.log("Dữ liệu gửi lên server:", updatedStudent); // Kiểm tra log dữ liệu trước khi gửi
-
         try {
+            console.log("Dữ liệu gửi lên server:", updatedStudent); // Kiểm tra log trước khi gửi
+
             let response = await fetch(`/students/${studentId}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },  // Gửi dữ liệu dạng JSON
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedStudent)
             });
 
             let result = await response.json();
-            console.log("Phản hồi từ server:", result);
+            console.log("Phản hồi từ server:", result); // Kiểm tra phản hồi từ server
 
             alert(result.message);
 

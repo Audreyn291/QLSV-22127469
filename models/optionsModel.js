@@ -6,6 +6,17 @@ const optionSchema = new mongoose.Schema({
     programs: { type: [String], default: ["Chất lượng cao", "Đại trà"] },
     emailDomains: { type: [String], default: ["student.university.edu.vn"] },
     phoneCountryCodes: { type: [String], default: ["+84", "03", "05", "07", "08", "09"] },
+    statusRules: {
+        type: Map,
+        of: [String],
+        default: {
+            "Đang học": ["Bảo lưu", "Đã tốt nghiệp", "Đình chỉ"],
+            "Bảo lưu": ["Đang học", "Đình chỉ"],
+            "Đã tốt nghiệp": [],
+            "Đã thôi học": [],
+            "Đình chỉ": ["Đang học"]
+        }
+    }
 });
 
 const Option = mongoose.model('Option', optionSchema);

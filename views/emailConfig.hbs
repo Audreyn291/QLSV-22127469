@@ -38,6 +38,30 @@
     </ul>
 </div>
 
+<div class="bg-white p-7 rounded-lg shadow-md mt-6">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Quản lý Quy Tắc Chuyển Đổi Trạng Thái Sinh Viên</h1>
+
+    <!-- Form thêm quy tắc trạng thái -->
+    <div class="mb-4">
+        <label class="block text-lg font-medium text-gray-700">Thêm Quy Tắc Chuyển Đổi</label>
+        <select id="currentStatus" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <!-- Danh sách trạng thái hiện tại sẽ được thêm bằng JS -->
+        </select>
+        <select id="newStatus" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm">
+            <!-- Danh sách trạng thái mới sẽ được thêm bằng JS -->
+        </select>
+        <button onclick="addStatusRule()" class="mt-2 bg-[#FEA6B6] text-white px-4 py-2 rounded hover:bg-[#FFC2D1]">
+            Thêm Quy Tắc
+        </button>
+    </div>
+
+    <!-- Danh sách quy tắc trạng thái -->
+    <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-2">Danh sách Quy Tắc Chuyển Đổi</h2>
+    <ul id="statusRuleList" class="border border-gray-300 rounded-lg p-4">
+        <!-- Các quy tắc sẽ được hiển thị tại đây -->
+    </ul>
+</div>
+
 <script>
     // Lấy danh sách tên miền từ server
     async function fetchEmailDomains() {
@@ -164,4 +188,76 @@
 
     // Gọi hàm fetch khi trang load
     document.addEventListener("DOMContentLoaded", fetchPhoneCodes);
+
+    async function fetchStatusRules() {
+        const response = await fetch('/config');
+        const config = await response.json();
+        const statusRules = config.statusRules || {};
+        const statuses = config.statuses || [];
+
+        // Cập nhật danh sách chọn trạng thái hiện tại và trạng thái mới
+        let currentStatusSelect = document.getElementById('currentStatus');
+        let newStatusSelect = document.getElementById('newStatus');
+        currentStatusSelect.innerHTML = newStatusSelect.innerHTML = "";
+
+        statuses.forEach(status => {
+            currentStatusSelect.innerHTML += `<option value="${status}">${status}</option>`;
+            newStatusSelect.innerHTML += `<option value="${status}">${status}</option>`;
+        });
+
+        // Hiển thị danh sách quy tắc trạng thái
+        let listElement = document.getElementById('statusRuleList');
+        listElement.innerHTML = "";
+
+        Object.entries(statusRules).forEach(([currentStatus, nextStatuses]) => {
+            nextStatuses.forEach(nextStatus => {
+                let li = document.createElement('li');
+                li.className = "flex justify-between p-2 border-b";
+                li.innerHTML = `
+                    <span>${currentStatus} → ${nextStatus}</span>
+                    <button onclick="deleteStatusRule('${currentStatus}', '${nextStatus}')"
+                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                        Xóa
+                    </button>
+                `;
+                listElement.appendChild(li);
+            });
+        });
+    }
+
+    async function addStatusRule() {
+        const currentStatus = document.getElementById('currentStatus').value;
+        const newStatus = document.getElementById('newStatus').value;
+
+        if (!currentStatus || !newStatus || currentStatus === newStatus) {
+            alert("Vui lòng chọn trạng thái hợp lệ!");
+            return;
+        }
+
+        const response = await fetch('/config/status-rules', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ from: currentStatus, to: newStatus })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        fetchStatusRules();
+    }
+
+    async function deleteStatusRule(from, to) {
+        if (!confirm(`Bạn có chắc chắn muốn xóa quy tắc "${from} → ${to}"?`)) return;
+
+        const response = await fetch('/config/status-rules', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ from, to })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        fetchStatusRules();
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchStatusRules);
 </script>
