@@ -118,3 +118,25 @@ http://localhost:3000
 - Phiên bản và ngày buid ứng dụng được hiện thị trên trang home.
 ![Show version, ngày build](/screenshots/26.png)
 
+## Phiên bản version 3.0 (Bổ sung Business Rules)
+
+### a. MSSV phải là duy nhất
+- Đã thực hiện ở phiên bản trước đó.
+
+### b.Email phải thuộc một tên miền nhất định và có thể cấu hình động (configurable) 
+- Giao diện mới để chỉnh sửa.
+![Thay đổi Email](/screenshots/31.png)
+- Nhập đuôi email muốn thêm vào và nhấn nút **"Thêm"** và có thể nhấn nút **"Xóa"** khi không muốn.
+![Thêm email](/screenshots/32.png)
+![Đã thêm thành công](/screenshots/33.png)
+
+### c.Số điện thoại phải có định dạng hợp lệ theo quốc gia (configurable) 
+- Giao diện mới để chỉnh sửa.
+![Thay đổi SĐT](/screenshots/34.png)
+- Nhập mã quốc gia vào và nhấn nút **"Thêm"** và có thể nhấn nút **"Xóa"** khi không muốn.
+![Thêm](/screenshots/35.png)
+![Đã thêm thành công](/screenshots/36.png)
+
+### d.Tình trạng sinh viên chỉ có thể thay đổi theo một số quy tắc (configurable)
+- Làm tương tự như trên để thêm quy tắc chuyển đổi trạng thái của sinh viên.
+![Giao diện mới](/screenshots/37.png)
