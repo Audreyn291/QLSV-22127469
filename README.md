@@ -158,6 +158,11 @@ http://localhost:3000
 - Đã thực hiện ở phiên bản trước.
 
 ### e.  Xuất giấy xác nhận tình trạng sinh viên ra **HTML/MD/PDF/DOCX** (ít nhất 2 định dạng)
+- Lưu ý: cần tải các thư viện sau để chạy được chương trình:
+npm install html-pdf
+npm install jsdom
+npm install html-to-text
+npm install docx
 - Nhấn "**Xác nhận SV**" và chọn sinh viên muốn xuất file.
 ![Chọn SV](/screenshots/42.png)
 - Chọn "**Lưu mục đích**" sau khi đã chọn xong mục đích xác nhận.
