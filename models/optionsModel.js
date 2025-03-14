@@ -16,7 +16,8 @@ const optionSchema = new mongoose.Schema({
             "Đã thôi học": [],
             "Đình chỉ": ["Đang học"]
         }
-    }
+    },
+    rulesEnabled: { type: Boolean, default: true }
 });
 
 const Option = mongoose.model('Option', optionSchema);

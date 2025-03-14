@@ -1,4 +1,15 @@
 <div class="bg-white p-7 rounded-lg shadow-md">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Cài đặt Quy Định</h1>
+
+    <div class="mb-4">
+        <p class="text-lg">Trạng thái: <span id="rules-status" class="font-bold"></span></p>
+        <button id="toggle-rules-btn" class="mt-4 bg-[#FEA6B6] text-white px-4 py-2 rounded hover:bg-[#FEA6B6]">
+            Đang tải...
+        </button>
+    </div>
+</div>
+
+<div class="bg-white p-7 rounded-lg shadow-md mt-6">
     <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Quản lý Tên Miền Email</h1>
 
     <!-- Form thêm tên miền email -->
@@ -260,4 +271,22 @@
     }
 
     document.addEventListener("DOMContentLoaded", fetchStatusRules);
+
+    async function fetchRulesStatus() {
+        const response = await fetch('/config/rules-status');
+        const data = await response.json();
+        const statusText = data.rulesEnabled ? "Đang Bật" : "Đang Tắt";
+        document.getElementById('rules-status').textContent = statusText;
+        document.getElementById('toggle-rules-btn').textContent = data.rulesEnabled ? "Tắt Quy Định" : "Bật Quy Định";
+    }
+
+    async function toggleRulesStatus() {
+        const response = await fetch('/config/toggle-rules', { method: 'POST' });
+        const data = await response.json();
+        alert(data.message);
+        fetchRulesStatus();
+    }
+
+    document.getElementById('toggle-rules-btn').addEventListener('click', toggleRulesStatus);
+    document.addEventListener("DOMContentLoaded", fetchRulesStatus);
 </script>

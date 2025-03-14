@@ -96,23 +96,29 @@
         const email = emailInput.value.trim();
         const phone = phoneInput.value.trim();
 
-        // Lấy danh sách domain hợp lệ từ API
-        const emailResponse = await fetch('/config/email-domains');
-        const allowedDomains = await emailResponse.json();
+        // Lấy trạng thái bật/tắt quy định từ API
+        const rulesResponse = await fetch('/config/rules-status');
+        const { rulesEnabled } = await rulesResponse.json();
 
-        const emailDomain = email.split('@').pop();
-        if (!allowedDomains.includes(emailDomain)) {
-            alert(`Email phải thuộc các tên miền hợp lệ: ${allowedDomains.join(", ")}`);
-            return;
-        }
+        if (rulesEnabled) {
+            // Lấy danh sách domain hợp lệ từ API
+            const emailResponse = await fetch('/config/email-domains');
+            const allowedDomains = await emailResponse.json();
 
-        // Lấy danh sách mã quốc gia hợp lệ từ API
-        const phoneResponse = await fetch('/config/phone-codes');
-        const allowedPhoneCodes = await phoneResponse.json();
+            const emailDomain = email.split('@').pop();
+            if (!allowedDomains.includes(emailDomain)) {
+                alert(`Email phải thuộc các tên miền hợp lệ: ${allowedDomains.join(", ")}`);
+                return;
+            }
 
-        if (!allowedPhoneCodes.some(code => phone.startsWith(code))) {
-            alert(`Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(", ")}`);
-            return;
+            // Lấy danh sách mã quốc gia hợp lệ từ API
+            const phoneResponse = await fetch('/config/phone-codes');
+            const allowedPhoneCodes = await phoneResponse.json();
+
+            if (!allowedPhoneCodes.some(code => phone.startsWith(code))) {
+                alert(`Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(", ")}`);
+                return;
+            }
         }
 
         // Kiểm tra định dạng email hợp lệ

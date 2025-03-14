@@ -471,35 +471,36 @@ export const postAddStudent = async (req, res) => {
       await config.save();
     }
 
-    const allowedDomains = config.emailDomains || [];
-    const allowedPhoneCodes = config.phoneCountryCodes || [];
+    if (config.rulesEnabled) {
+      const allowedDomains = config.emailDomains || [];
+      const allowedPhoneCodes = config.phoneCountryCodes || [];
 
-    // Kiểm tra email có đúng domain không
-    const emailDomain = email.split('@').pop();
-    if (!allowedDomains.includes(emailDomain)) {
-      return isApiRequest
-        ? res.status(400).json({ error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` })
-        : res.render('add', { error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` });
-    }
+      // Kiểm tra email có đúng domain không
+      const emailDomain = email.split('@').pop();
+      if (!allowedDomains.includes(emailDomain)) {
+        return isApiRequest
+          ? res.status(400).json({ error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` })
+          : res.render('add', { error: `Email phải thuộc tên miền hợp lệ: ${allowedDomains.join(', ')}` });
+      }
 
-    // Kiểm tra số điện thoại có đúng mã quốc gia không
-    if (!allowedPhoneCodes.some(code => sốĐiệnThoại.startsWith(code))) {
-      return isApiRequest
-        ? res.status(400).json({ error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` })
-        : res.render('add', { error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` });
-    }
+      // Kiểm tra số điện thoại có đúng mã quốc gia không
+      if (!allowedPhoneCodes.some(code => sốĐiệnThoại.startsWith(code))) {
+        return isApiRequest
+          ? res.status(400).json({ error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` })
+          : res.render('add', { error: `Số điện thoại phải bắt đầu bằng: ${allowedPhoneCodes.join(', ')}` });
+      }
 
-    // Nếu khoa chưa tồn tại, thêm vào danh sách
-    if (!config.departments.includes(khoa)) {
-      config.departments.push(khoa);
-      await config.save();
+      // Nếu khoa chưa tồn tại, thêm vào danh sách
+      if (!config.departments.includes(khoa)) {
+        config.departments.push(khoa);
+        await config.save();
+      }
     }
 
     // Tạo sinh viên mới
     const newStudent = new Student(req.body);
     await newStudent.save();
 
-    // Trả về JSON nếu request từ API, hoặc redirect nếu từ giao diện web
     return isApiRequest
       ? res.status(201).json({ student: newStudent })
       : res.redirect('/list');
@@ -672,5 +673,34 @@ export const getDepartments = async (req, res) => {
   } catch (error) {
     logger.error(`Lỗi tải danh sách khoa: ${error.message}`);
     res.status(500).json({ message: "Lỗi khi tải danh sách khoa." });
+  }
+};
+
+//lấy và cập nhật trạng thái bật/tắt quy định
+export const getRulesStatus = async (req, res) => {
+  try {
+    let config = await Option.findOne();
+    if (!config) {
+      config = new Option();
+      await config.save();
+    }
+    res.json({ rulesEnabled: config.rulesEnabled });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi lấy trạng thái quy định." });
+  }
+};
+
+export const toggleRulesStatus = async (req, res) => {
+  try {
+    let config = await Option.findOne();
+    if (!config) {
+      config = new Option();
+    }
+
+    config.rulesEnabled = !config.rulesEnabled; // Đảo trạng thái
+    await config.save();
+    res.json({ message: `Quy định đã được ${config.rulesEnabled ? "bật" : "tắt"}!`, rulesEnabled: config.rulesEnabled });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi cập nhật trạng thái quy định." });
   }
 };

@@ -412,3 +412,47 @@
 2025-02-28 21:37:37 [INFO]: [GET] /config/email-domains
 2025-02-28 21:40:46 [INFO]: [POST] /config/phone-codes
 2025-02-28 21:40:54 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:25:44 [INFO]: Truy cập trang chủ
+2025-03-14 12:25:44 [INFO]: [GET] /api/version
+2025-03-14 12:25:44 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-03-14 12:25:44 [INFO]: [GET] /favicon.ico
+2025-03-14 12:25:49 [INFO]: Lấy danh sách khoa
+2025-03-14 12:25:50 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:25:56 [INFO]: [GET] /email-config
+2025-03-14 12:25:56 [INFO]: [GET] /config/email-domains
+2025-03-14 12:25:56 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:26:17 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:27:09 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67d3ab685aeda1845bc1e58f
+2025-03-14 12:27:09 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Bảo Nhi","email":"nbnhi22@clc.fitus.edu.vn","ngàySinh":"","giớiTính":"Nữ","khoa":"Khoa Kinh tế","khóa":"K22","chươngTrình":"Đại trà","địaChỉ":"TP. Hồ Chí Minh","sốĐiệnThoại":"0911882768","tìnhTrạng":"Đã tốt nghiệp"}
+2025-03-14 12:27:09 [INFO]: Cập nhật thành công - ID: 67d3ab685aeda1845bc1e58f, Dữ liệu mới: {"_id":"67d3ab685aeda1845bc1e58f","mssv":"22127427","họVàTên":"Nguyễn Bảo Nhi","email":"nbnhi22@clc.fitus.edu.vn","giớiTính":"Nữ","khoa":"Khoa Kinh tế","khóa":"K22","chươngTrình":"Đại trà","địaChỉ":"TP. Hồ Chí Minh","sốĐiệnThoại":"0911882768","tìnhTrạng":"Đã tốt nghiệp","createdAt":"2025-03-14T04:07:04.352Z","__v":0,"purpose":"Xác nhận đang học để vay vốn ngân hàng"}
+2025-03-14 12:27:10 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:27:47 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67d3ab685aeda1845bc1e58f
+2025-03-14 12:27:47 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Bảo Nhi","email":"nbnhi22@clc.fitus.edu.vn","ngàySinh":"2025-02-27","giớiTính":"Nữ","khoa":"Khoa Kinh tế","khóa":"K22","chươngTrình":"Đại trà","địaChỉ":"TP. Hồ Chí Minh","sốĐiệnThoại":"0911882768","tìnhTrạng":"Đã tốt nghiệp"}
+2025-03-14 12:27:52 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67d3ab685aeda1845bc1e58f
+2025-03-14 12:27:52 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Nguyễn Bảo Nhi","email":"nbnhi22@clc.fitus.edu.vn","ngàySinh":"2025-02-27","giớiTính":"Nữ","khoa":"Khoa Kinh tế","khóa":"K22","chươngTrình":"Đại trà","địaChỉ":"TP. Hồ Chí Minh","sốĐiệnThoại":"0911882768","tìnhTrạng":"Đã tốt nghiệp"}
+2025-03-14 12:28:03 [INFO]: Nhận yêu cầu cập nhật sinh viên - ID: 67d3af1139d9ff6f5dd5a71f
+2025-03-14 12:28:03 [INFO]: Dữ liệu từ frontend: {"họVàTên":"Đỗ Hải Yến","email":"company@example.com","ngàySinh":"2025-03-01","giớiTính":"Nữ","khoa":"Khoa Tiếng Pháp","khóa":"K22","chươngTrình":"Đại trà","địaChỉ":"Dak Lak","sốĐiệnThoại":"0911882768","tìnhTrạng":"Đã tốt nghiệp"}
+2025-03-14 12:28:03 [INFO]: Cập nhật thành công - ID: 67d3af1139d9ff6f5dd5a71f, Dữ liệu mới: {"_id":"67d3af1139d9ff6f5dd5a71f","mssv":"22127469","họVàTên":"Đỗ Hải Yến","email":"company@example.com","giớiTính":"Nữ","khoa":"Khoa Tiếng Pháp","khóa":"K22","chươngTrình":"Đại trà","địaChỉ":"Dak Lak","sốĐiệnThoại":"0911882768","tìnhTrạng":"Đã tốt nghiệp","createdAt":"2025-03-14T04:22:41.202Z","__v":0}
+2025-03-14 12:28:05 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:28:07 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:28:10 [INFO]: Lấy danh sách khoa
+2025-03-14 12:28:10 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:32:28 [INFO]: Truy cập trang chủ
+2025-03-14 12:32:28 [INFO]: [GET] /api/version
+2025-03-14 12:32:28 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-03-14 12:32:33 [INFO]: Lấy danh sách khoa
+2025-03-14 12:32:34 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:32:40 [INFO]: [GET] /email-config
+2025-03-14 12:32:40 [INFO]: [GET] /config/email-domains
+2025-03-14 12:32:40 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:32:40 [INFO]: [GET] /config/rules-status
+2025-03-14 12:34:01 [INFO]: [GET] /email-config
+2025-03-14 12:34:01 [INFO]: [GET] /config/email-domains
+2025-03-14 12:34:01 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:34:01 [INFO]: [GET] /config/rules-status
+2025-03-14 12:34:03 [INFO]: [POST] /config/toggle-rules
+2025-03-14 12:34:08 [INFO]: [GET] /config/rules-status
+2025-03-14 12:34:11 [INFO]: [POST] /config/toggle-rules
+2025-03-14 12:34:17 [INFO]: [GET] /config/rules-status
+2025-03-14 12:34:20 [INFO]: [POST] /config/toggle-rules
+2025-03-14 12:34:37 [INFO]: [GET] /config/rules-status

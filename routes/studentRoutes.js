@@ -6,6 +6,7 @@ import { getEmailDomains, addEmailDomain, deleteEmailDomain } from '../controlle
 import { getPhoneCountryCodes, addPhoneCountryCode, deletePhoneCountryCode } from '../controllers/studentController.js';
 import { getAppInfo } from '../controllers/studentController.js';
 import { addStatusRule, deleteStatusRule } from '../controllers/studentController.js';
+import { getRulesStatus, toggleRulesStatus } from '../controllers/studentController.js';
 import express from 'express';
 import multer from 'multer';
 import logger from '../utils/logger.js';
@@ -41,6 +42,9 @@ router.use((req, res, next) => {
     logger.info(`[${req.method}] ${req.originalUrl}`);
     next();
 });
+
+router.get('/config/rules-status', getRulesStatus);
+router.post('/config/toggle-rules', toggleRulesStatus); // Bật/Tắt quy định
 
 router.get('/config/email-domains', getEmailDomains);
 router.post('/config/email-domains', addEmailDomain);
