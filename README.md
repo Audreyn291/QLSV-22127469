@@ -140,3 +140,28 @@ http://localhost:3000
 ### d.Tình trạng sinh viên chỉ có thể thay đổi theo một số quy tắc (configurable)
 - Làm tương tự như trên để thêm quy tắc chuyển đổi trạng thái của sinh viên.
 ![Giao diện mới](/screenshots/37.png)
+
+## Phiên bản version 4.0 (Bổ sung Business Rules)
+
+### a.  Chỉ được phép xóa sinh viên có creation date/time trong khoảng thời gian nhất định. Ví dụ: 30 phút (configurable) 
+![Không cho phép xóa](/screenshots/40.png)
+
+### b.  Cho phép bật / tắt việc áp dụng các quy định 
+- Vào biểu tưởng "**Config**" và chọn "**Bật Quy Định**" hoặc "**Tắt Quy Định**" tùy ý.
+![Bật quy định](/screenshots/38.png)
+![Tắt quy định](/screenshots/39.png)
+
+### c.  Các màn hình cần hiện logo hoặc tên Trường (ít nhất một)
+![Thêm logo trường](/screenshots/41.png)
+
+### d.  Cho phép xóa khoa, xóa tình trạng sinh viên, xóa chương trình đào tạo nếu không có ràng buộc về dữ liệu 
+- Đã thực hiện ở phiên bản trước.
+
+### e.  Xuất giấy xác nhận tình trạng sinh viên ra **HTML/MD/PDF/DOCX** (ít nhất 2 định dạng)
+- Nhấn "**Xác nhận SV**" và chọn sinh viên muốn xuất file.
+![Chọn SV](/screenshots/42.png)
+- Chọn "**Lưu mục đích**" sau khi đã chọn xong mục đích xác nhận.
+- Chọn các nút "**Xuất HTML**", "**Xuất MD**" hoặc "**Xuất PDF**" tùy vào mục đích.
+![Xuất PDF](/screenshots/43.png)
+![Kết quả xuất](/screenshots/44.png)
+
