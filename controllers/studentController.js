@@ -547,6 +547,17 @@ export const deleteStudent = async (req, res) => {
       logger.warn(`Xóa sinh viên thất bại - ID không tồn tại: ${req.params.id}`);
       return res.status(404).json({ message: "Không tìm thấy sinh viên." });
     }
+
+    const now = new Date();
+
+    const deletionTimeLimit = 30;
+
+    const timeDiff = (now - student.createdAt) / (1000 * 60);
+
+    if (timeDiff > deletionTimeLimit) {
+      return res.status(403).json({ message: `Chỉ có thể xóa sinh viên trong vòng ${deletionTimeLimit} phút sau khi tạo.` });
+    }
+
     logger.info(`Xóa sinh viên thành công - ID: ${req.params.id}`);
     res.json({ message: "Xóa sinh viên thành công!" });
   } catch (error) {

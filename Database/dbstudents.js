@@ -21,7 +21,8 @@ const studentSchema = new mongoose.Schema({
     chươngTrình: String,
     địaChỉ: String,
     sốĐiệnThoại: String,
-    tìnhTrạng: String
+    tìnhTrạng: String,
+    createdAt: { type: Date, default: Date.now } 
 });
 
 export const Student = mongoose.model('Student', studentSchema);

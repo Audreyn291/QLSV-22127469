@@ -258,23 +258,41 @@
         }
     }
 
-    function deleteStudent(studentId) {
+    async function deleteStudent(studentId) {
         if (!studentId) {
             alert("Lỗi: ID sinh viên không hợp lệ!");
             return;
         }
 
-        if (confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
-            fetch(`/students/${studentId}`, { method: "DELETE" })
-                .then(response => response.json())
-                .then(result => {
-                    alert(result.message);
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error("Lỗi khi xóa:", error);
-                    alert("Không thể xóa sinh viên.");
-                });
+        try {
+            let response = await fetch(`/students/${studentId}`);
+            if (!response.ok) {
+                alert("Không tìm thấy sinh viên!");
+                return;
+            }
+
+            let student = await response.json();
+            let createdAt = new Date(student.createdAt);
+            let now = new Date();
+
+            const deletionTimeLimit = 30;
+
+            let timeDiff = (now - createdAt) / (1000 * 60);
+
+            if (timeDiff > deletionTimeLimit) {
+                alert(`Sinh viên này đã tồn tại hơn ${deletionTimeLimit} phút, không thể xóa!`);
+                return;
+            }
+
+            if (confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
+                let deleteResponse = await fetch(`/students/${studentId}`, { method: "DELETE" });
+                let result = await deleteResponse.json();
+                alert(result.message);
+                location.reload();
+            }
+        } catch (error) {
+            console.error("Lỗi khi xóa:", error);
+            alert("Không thể xóa sinh viên.");
         }
     }
 
