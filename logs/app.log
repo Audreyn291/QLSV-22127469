@@ -482,3 +482,10 @@
 2025-03-14 12:53:55 [INFO]: [GET] /config/phone-codes
 2025-03-14 12:53:55 [INFO]: [GET] /config/email-domains
 2025-03-14 12:53:55 [INFO]: [GET] /config/rules-status
+2025-03-14 12:58:03 [INFO]: [GET] /email-config
+2025-03-14 12:58:04 [INFO]: [GET] /config/email-domains
+2025-03-14 12:58:04 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:58:04 [INFO]: [GET] /config/rules-status
+2025-03-14 13:10:47 [INFO]: Truy cập trang chủ
+2025-03-14 13:10:47 [INFO]: [GET] /api/version
+2025-03-14 13:10:47 [INFO]: Lấy thông tin phiên bản ứng dụng.
