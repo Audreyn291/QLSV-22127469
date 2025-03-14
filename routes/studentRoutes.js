@@ -7,6 +7,8 @@ import { getPhoneCountryCodes, addPhoneCountryCode, deletePhoneCountryCode } fro
 import { getAppInfo } from '../controllers/studentController.js';
 import { addStatusRule, deleteStatusRule } from '../controllers/studentController.js';
 import { getRulesStatus, toggleRulesStatus } from '../controllers/studentController.js';
+import { getConfirmationPage, exportConfirmation, updateStudentPurpose } from "../controllers/studentController.js";
+import { getAllStudents } from "../controllers/studentController.js";
 import express from 'express';
 import multer from 'multer';
 import logger from '../utils/logger.js';
@@ -21,8 +23,13 @@ router.get('/list', getStudentList);
 router.get('/search', (req, res) => {
     res.render('search');
 });
+router.get("/confirmation", getConfirmationPage);
+router.get("/confirmation/:id", getConfirmationPage);
+router.get("/export-confirmation/:id", exportConfirmation);
+router.put("/students/:id/update-purpose", updateStudentPurpose);
 router.get('/api/search', getSearchStudent);
 router.post('/students', postAddStudent);
+router.get("/students", getAllStudents);
 router.get('/students/:id', getStudentById);  // Định tuyến lấy thông tin sinh viên
 router.put('/students/:id', updateStudent);  // Định tuyến cập nhật sinh viên
 router.delete('/students/:id', deleteStudent);  // Định tuyến xóa sinh viên
@@ -45,6 +52,9 @@ router.use((req, res, next) => {
 
 router.get('/config/rules-status', getRulesStatus);
 router.post('/config/toggle-rules', toggleRulesStatus); // Bật/Tắt quy định
+
+router.get("/confirmation/:id", getConfirmationPage);
+router.get("/export-confirmation/:id", exportConfirmation);  // Xuất file
 
 router.get('/config/email-domains', getEmailDomains);
 router.post('/config/email-domains', addEmailDomain);

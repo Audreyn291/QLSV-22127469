@@ -22,6 +22,7 @@ const studentSchema = new mongoose.Schema({
     địaChỉ: String,
     sốĐiệnThoại: String,
     tìnhTrạng: String,
+    purpose: { type: String, default: "Xác nhận làm hồ sơ xin việc / thực tập" },
     createdAt: { type: Date, default: Date.now } 
 });
 

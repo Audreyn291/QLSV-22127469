@@ -456,3 +456,29 @@
 2025-03-14 12:34:17 [INFO]: [GET] /config/rules-status
 2025-03-14 12:34:20 [INFO]: [POST] /config/toggle-rules
 2025-03-14 12:34:37 [INFO]: [GET] /config/rules-status
+2025-03-14 12:37:41 [INFO]: [GET] /email-config
+2025-03-14 12:37:41 [INFO]: [GET] /config/email-domains
+2025-03-14 12:37:41 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:37:41 [INFO]: [GET] /config/rules-status
+2025-03-14 12:37:46 [INFO]: Lấy danh sách khoa
+2025-03-14 12:37:46 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:37:48 [INFO]: [GET] /email-config
+2025-03-14 12:37:48 [INFO]: [GET] /config/email-domains
+2025-03-14 12:37:48 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:37:48 [INFO]: [GET] /config/rules-status
+2025-03-14 12:49:33 [INFO]: [GET] /email-config
+2025-03-14 12:49:34 [INFO]: [GET] /config/email-domains
+2025-03-14 12:49:34 [INFO]: [GET] /config/rules-status
+2025-03-14 12:49:34 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:51:36 [INFO]: Truy cập trang chủ
+2025-03-14 12:51:36 [INFO]: [GET] /api/version
+2025-03-14 12:51:36 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-03-14 12:52:38 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:53:06 [INFO]: Lấy danh sách sinh viên - Số lượng: 2
+2025-03-14 12:53:08 [INFO]: Truy cập trang chủ
+2025-03-14 12:53:08 [INFO]: [GET] /api/version
+2025-03-14 12:53:08 [INFO]: Lấy thông tin phiên bản ứng dụng.
+2025-03-14 12:53:55 [INFO]: [GET] /email-config
+2025-03-14 12:53:55 [INFO]: [GET] /config/phone-codes
+2025-03-14 12:53:55 [INFO]: [GET] /config/email-domains
+2025-03-14 12:53:55 [INFO]: [GET] /config/rules-status

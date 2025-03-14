@@ -21,6 +21,11 @@
                 </a>
             </li>
             <li>
+                <a id="confirmationLink" class="font-semibold hover:text-gray-400 transition duration-200">
+                    Xác nhận SV
+                </a>
+            </li>
+            <li>
                 <a href="/email-config" class="text-gray-700 font-semibold">
                     <img src="/images/setting-svgrepo-com.svg" alt="Cấu hình" width="24" height="24">
                 </a>
@@ -28,3 +33,16 @@
         </ul>
     </div>
 </nav>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const response = await fetch("/students");  // API lấy danh sách sinh viên
+        const students = await response.json();
+        if (students.length > 0) {
+            document.getElementById("confirmationLink").href = `/confirmation/${students[0]._id}`;
+        } else {
+            document.getElementById("confirmationLink").style.display = "none"; // Ẩn link nếu không có sinh viên
+        }
+    });
+</script>

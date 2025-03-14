@@ -7,11 +7,173 @@ import multer from 'multer';
 import logger from "../utils/logger.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import pdf from "html-pdf";
+import { JSDOM } from "jsdom";
+import { convert } from "html-to-text";
 
 // Trang chủ
 export const getHome = (req, res) => {
   logger.info("Truy cập trang chủ");
   res.render('home');
+};
+
+//EX4
+export const getConfirmationPage = async (req, res) => {
+  try {
+    console.log("ID sinh viên:", req.params.id)
+
+    const student = await Student.findById(req.params.id).lean();
+    if (!student) {
+      console.log("Không tìm thấy sinh viên!");
+      return res.status(404).send("Không tìm thấy sinh viên");
+    }
+
+    res.render("confirmation", {
+      student,
+      purpose: "Xác nhận làm hồ sơ xin việc / thực tập",
+      issuedDate: new Date().toLocaleDateString(),
+      validUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString()
+    });
+  } catch (error) {
+    console.error("Lỗi khi lấy thông tin sinh viên:", error);
+    res.status(500).send("Lỗi khi lấy thông tin sinh viên");
+  }
+};
+
+export const exportConfirmation = async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id).lean();
+    if (!student) return res.status(404).send("Không tìm thấy sinh viên");
+
+    const issuedDate = new Date().toLocaleDateString();
+    const validUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString();
+
+    // Lấy `purpose` từ database
+    const purpose = student.purpose || "Xác nhận làm hồ sơ xin việc / thực tập";
+
+    // Nội dung giấy xác nhận
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; border: 1px solid #ddd;">
+        <div style="text-align: center;">
+            <h1 style="margin-bottom: 5px;">TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN</h1>
+            <h2 style="margin-top: 0;">PHÒNG ĐÀO TẠO</h2>
+            <p>📍 Địa chỉ: 227 Nguyễn Văn Cừ, Quận 5, TP.HCM</p>
+            <p>📞 (028) 38 354 080 | 📧 contact@hcmus.edu.vn</p>
+        </div>
+        <hr style="margin: 20px 0;">
+        <h2 style="text-align: center;">GIẤY XÁC NHẬN TÌNH TRẠNG SINH VIÊN</h2>
+        <p>Trường Đại học Khoa học Tự nhiên xác nhận:</p>
+        <h3>1. Thông tin sinh viên:</h3>
+        <ul>
+            <li><strong>Họ và tên:</strong> ${student.họVàTên}</li>
+            <li><strong>Mã số sinh viên:</strong> ${student.mssv}</li>
+            <li><strong>Ngày sinh:</strong> ${student.ngàySinh || "N/A"}</li>
+            <li><strong>Giới tính:</strong> ${student.giớiTính || "N/A"}</li>
+            <li><strong>Khoa:</strong> ${student.khoa || "N/A"}</li>
+            <li><strong>Chương trình đào tạo:</strong> ${student.chươngTrình || "N/A"}</li>
+            <li><strong>Khóa:</strong> ${student.khóa || "N/A"}</li>
+        </ul>
+        <h3>2. Tình trạng sinh viên hiện tại:</h3>
+        <p>${student.tìnhTrạng || "N/A"}</p>
+        <h3>3. Mục đích xác nhận:</h3>
+        <p>${purpose}</p>
+        <h3>4. Thời gian cấp giấy:</h3>
+        <p>Giấy xác nhận có hiệu lực đến ngày: ${validUntil}</p>
+        <p>📅 Ngày cấp: ${issuedDate}</p>
+        <div style="text-align: right; margin-top: 20px;">
+            <p style="font-weight: bold;">✍ Trưởng Phòng Đào Tạo</p>
+            <p>(Ký, ghi rõ họ tên, đóng dấu)</p>
+        </div>
+      </div>
+    `;
+    const fileName = `confirmation-${student.mssv}`;
+
+    if (req.query.format === "html") {
+      res.setHeader("Content-Disposition", `attachment; filename=${fileName}.html`);
+      res.setHeader("Content-Type", "text/html");
+      return res.send(htmlContent);
+    }
+
+    if (req.query.format === "md") {
+      const markdown = `
+      # TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN  
+      ## PHÒNG ĐÀO TẠO  
+
+      📍 Địa chỉ: 227 Nguyễn Văn Cừ, Quận 5, TP.HCM  
+      📞 (028) 38 354 080 | ✉️ contact@hcmus.edu.vn  
+
+      ---
+
+      # GIẤY XÁC NHẬN TÌNH TRẠNG SINH VIÊN
+      Trường Đại học Khoa học Tự nhiên xác nhận: 
+
+      ## 1. Thông tin sinh viên:  
+      - **Họ và Tên:** ${student.họVàTên}  
+      - **MSSV:** ${student.mssv}  
+      - **Ngày sinh:** ${student.ngàySinh}
+      - **Giới tính:** ${student.giớiTính}
+      - **Khoa:** ${student.khoa}
+      - **Chương trình đào tạo:** ${student.chươngTrình} 
+      - **Khóa:** ${student.khóa}
+      
+      ## 2. Tình trạng sinh viên hiện tại:
+      ${student.tìnhTrạng}
+      
+      ## 3. Mục đích xác nhận:
+      ${purpose}
+
+      ## 4. Thời gian cấp giấy: 
+      Giấy xác nhận có hiệu lực đến ngày: ${validUntil}
+
+      📅 **Ngày cấp:** ${issuedDate}   
+
+      ✒️ **Trưởng Phòng Đào Tạo** 
+      *(Ký, ghi rõ họ tên, đóng dấu)*  
+      `;
+      res.setHeader("Content-Disposition", `attachment; filename=${fileName}.md`);
+      res.setHeader("Content-Type", "text/markdown");
+      return res.send(markdown);
+    }
+
+    if (req.query.format === "pdf") {
+      pdf.create(htmlContent).toBuffer((err, buffer) => {
+        if (err) return res.status(500).send("Lỗi xuất PDF");
+        res.setHeader("Content-Disposition", `attachment; filename=${fileName}.pdf`);
+        res.setHeader("Content-Type", "application/pdf");
+        res.send(buffer);
+      });
+      return;
+    }
+
+    res.status(400).send("Định dạng không hợp lệ");
+  } catch (error) {
+    console.error("Lỗi khi xuất file:", error);
+    res.status(500).send("Lỗi khi xuất file");
+  }
+};
+
+export const updateStudentPurpose = async (req, res) => {
+  try {
+    const { purpose } = req.body;
+    const student = await Student.findByIdAndUpdate(req.params.id, { purpose }, { new: true });
+
+    if (!student) return res.status(404).json({ error: "Không tìm thấy sinh viên" });
+
+    res.json({ message: "Cập nhật mục đích thành công!", student });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật mục đích:", error);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+};
+
+export const getAllStudents = async (req, res) => {
+  try {
+    const students = await Student.find().lean();
+    res.json(students);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách sinh viên:", error);
+    res.status(500).json({ error: "Lỗi server khi lấy danh sách sinh viên" });
+  }
 };
 
 //EX3
