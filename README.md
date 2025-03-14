@@ -170,3 +170,5 @@ npm install docx
 ![Xuất PDF](/screenshots/43.png)
 ![Kết quả xuất](/screenshots/44.png)
 
+- Bổ sung sửa lỗi SRP và DRY ở version tiếp theo.
+
